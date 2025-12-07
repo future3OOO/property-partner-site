@@ -159,10 +159,10 @@ const AvailableRentals = () => {
                         <div className="max-w-4xl">
                             <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-4 block">&gt; TENANT_SERVICES // RENTALS</span>
                             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 md:mb-8 tracking-tighter leading-none">
-                                AVAILABLE <br /> LISTINGS
+                                RENTAL <br /> LISTINGS
                             </h1>
                             <p className="text-lg md:text-xl text-white/60 max-w-2xl font-mono border-l-4 border-teal pl-6">
-                                Explore our portfolio of premium rental properties. Browse active listings or view our standard of presentation.
+                                See what ' s available. See what's recently been rented.
                             </p>
                         </div>
                     </div>
