@@ -1,70 +1,50 @@
-# Welcome to your GPT Engineer project
+# Property Partner Website
 
-## Project info
+A next-generation property management platform built with React, Tailwind CSS, and System V2.0 aesthetics.
 
-**URL**: https://run.gptengineer.app/projects/1ce78d90-7426-4dca-acae-161853eb328c/improve
+## Project Overview
 
-## How can I edit this code?
+This codebase powers the Property Partner public website, featuring:
+- **System V2.0 Design**: High-contrast, terminal-inspired aesthetics with Navy/Teal branding.
+- **Knowledge Base**: A comprehensive FAQ system with strict landlord/tenant separation.
+- **Tenant Resources**: Interactive guides, move-out checklists, and protocols.
+- **Legal Compliance**: Integrated Privacy Policy and Terms of Service.
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use GPT Engineer**
+- **Framework**: [React](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [Shadcn UI](https://ui.shadcn.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/)
 
-Simply visit the GPT Engineer project at [GPT Engineer](https://gptengineer.app/projects/1ce78d90-7426-4dca-acae-161853eb328c/improve) and start prompting.
+## Getting Started
 
-Changes made via gptengineer.app will be committed automatically to this repo.
+### Prerequisites
+- Node.js (v18+)
+- npm
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in the GPT Engineer UI.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Install dependencies
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- `src/pages`: Main route components (LandlordServices, TenantResources, etc.).
+- `src/components`: Reusable UI components (Header, Footer, ui/).
+- `src/components/ui`: Shadcn primitives.
+- `src/lib`: Utility functions.
 
-**Use GitHub Codespaces**
+## Deployment
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The project is configured for deployment on standard static hosting providers (Netlify, Vercel, etc.).
+Build command: `npm run build`
+Output directory: `dist`
 
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-All GPT Engineer projects can be deployed directly via the GPT Engineer app.
-
-Simply visit your project at [GPT Engineer](https://gptengineer.app/projects/1ce78d90-7426-4dca-acae-161853eb328c/improve) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.gptengineer.app/tips-tricks/custom-domain/)
+---
+© 2025 Property Partner. All rights reserved.
