@@ -44,13 +44,6 @@ ListItem.displayName = "ListItem";
 const Header = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [contactDialogOpen, setContactDialogOpen] = useState(false);
-
-  const handleMobileGetStarted = () => {
-    setIsMenuOpen(false);
-    // Small delay to let Sheet close animation complete
-    setTimeout(() => setContactDialogOpen(true), 150);
-  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-[999] bg-paper border-b-4 border-navy max-w-[100vw]">
@@ -294,12 +287,11 @@ const Header = () => {
                   <a href="https://client.propertytree.com/login" target="_blank" rel="noopener noreferrer" className="w-full text-center font-mono text-sm font-bold uppercase tracking-widest text-navy py-4 border-2 border-navy">
                     Sign In
                   </a>
-                  <Button 
-                    onClick={handleMobileGetStarted}
-                    className="w-full h-14 bg-navy text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none border-2 border-navy"
-                  >
+                  <ContactDialog>
+                  <Button className="w-full h-14 bg-navy text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none border-2 border-navy">
                     Get Started
                   </Button>
+                </ContactDialog>
                 </div>
               </nav>
             </div>
@@ -307,11 +299,6 @@ const Header = () => {
         </Sheet>
 
       </div>
-
-      {/* Separate ContactDialog for mobile - controlled by state */}
-      <ContactDialog open={contactDialogOpen} onOpenChange={setContactDialogOpen}>
-        <span className="hidden" />
-      </ContactDialog>
     </header>
   );
 };
