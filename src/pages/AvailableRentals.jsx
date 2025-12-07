@@ -162,7 +162,7 @@ const AvailableRentals = () => {
                                 RENTAL <br /> LISTINGS
                             </h1>
                             <p className="text-lg md:text-xl text-white/60 max-w-2xl font-mono border-l-4 border-teal pl-6">
-                                See what ' s available. See what's recently been rented.
+                                See what's available. See what's recently been rented.
                             </p>
                         </div>
                     </div>
