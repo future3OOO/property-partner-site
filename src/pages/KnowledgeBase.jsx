@@ -259,7 +259,7 @@ const LANDLORD_DATABASE = [
 
                         <div className="border-l-2 border-teal pl-4">
                             <h4 className="font-bold text-navy text-sm mb-1">Do you charge for maintenance coordination?</h4>
-                            <p className="text-xs text-ink-light"><strong>NEVER.</strong> We do not add a markup to contractor invoices. This ensures we are incentivized to find the best value, not the most expensive.</p>
+                            <p className="text-xs text-ink-light"><strong>NEVER.</strong> We do not add a markup to contractor invoices. This ensures we are incentivised to find the best value, not the most expensive.</p>
                         </div>
 
                         <div className="border-l-2 border-teal pl-4">

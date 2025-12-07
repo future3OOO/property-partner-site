@@ -1,26 +1,45 @@
 import React from 'react';
 import { Check, Star, Zap, Shield, Smartphone, FileText, UserCheck, PieChart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const BenefitCard = ({ icon: Icon, title, desc, tag }) => (
-  <div className="bg-white border-2 border-navy p-6 hover:bg-navy transition-all duration-200 group relative overflow-hidden">
-    <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-      <span className="font-mono text-[10px] text-teal border border-teal px-1">SPEC_{tag}</span>
+const BenefitCard = ({ icon: Icon, title, desc, tag, to }) => {
+  const Content = () => (
+    <>
+      <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        <span className="font-mono text-[10px] text-teal border border-teal px-1">SPEC_{tag}</span>
+      </div>
+
+      <div className="mb-6">
+        <Icon className="w-8 h-8 text-navy group-hover:text-teal transition-colors" />
+      </div>
+
+      {/* Bottom Right Dot */}
+      <div className="absolute bottom-4 right-4 w-2 h-2 bg-navy group-hover:bg-teal transition-colors" />
+      <h3 className="text-lg font-black text-navy mb-2 uppercase tracking-tight group-hover:text-white transition-colors">{title}</h3>
+      <p className="text-sm font-mono text-ink-light group-hover:text-white/70 transition-colors">{desc}</p>
+    </>
+  );
+
+  const containerClasses = "bg-white border-2 border-navy p-6 hover:bg-navy transition-all duration-200 group relative overflow-hidden block h-full";
+
+  if (to) {
+    return (
+      <Link to={to} className={containerClasses}>
+        <Content />
+      </Link>
+    );
+  }
+
+  return (
+    <div className={containerClasses}>
+      <Content />
     </div>
-
-    <div className="mb-6">
-      <Icon className="w-8 h-8 text-navy group-hover:text-teal transition-colors" />
-    </div>
-
-    {/* Bottom Right Dot */}
-    <div className="absolute bottom-4 right-4 w-2 h-2 bg-navy group-hover:bg-teal transition-colors" />
-    <h3 className="text-lg font-black text-navy mb-2 uppercase tracking-tight group-hover:text-white transition-colors">{title}</h3>
-    <p className="text-sm font-mono text-ink-light group-hover:text-white/70 transition-colors">{desc}</p>
-  </div>
-);
+  );
+};
 
 const BenefitsSection = () => {
   const benefits = [
-    { icon: Zap, title: "Transparent Pricing", desc: "No hidden fees - transparent 8.5% management fee", tag: "COST" },
+    { icon: Zap, title: "Transparent Pricing", desc: "No hidden fees - transparent 8% management fee", tag: "COST", to: "/pricing" },
     { icon: Star, title: "Professional Media", desc: "High-fidelity photography assets included", tag: "VISUAL" },
     { icon: FileText, title: "Detailed Reports", desc: "Granular property condition analytics", tag: "DATA" },
     { icon: Shield, title: "Regular Inspections", desc: "Quarterly physical asset verification", tag: "SECURE" },

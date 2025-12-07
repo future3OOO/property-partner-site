@@ -130,9 +130,9 @@ const HeroSection = () => {
   );
 };
 
-const ServiceModule = ({ number, title, icon: Icon, children, id_string }) => (
+const ServiceModule = ({ number, title, icon: Icon, children, id_string, id }) => (
   // OPTIMIZED SPACING: Reduced py-12 on mobile
-  <div className="group border-b border-navy/10 py-12 md:py-28 last:border-0 relative">
+  <div id={id} className="group border-b border-navy/10 py-12 md:py-28 last:border-0 relative">
     <div className="grid lg:grid-cols-12 gap-8 lg:gap-20">
       {/* Left Column: Header */}
       <div className="lg:col-span-4 lg:sticky lg:top-10 lg:self-start">
@@ -187,7 +187,7 @@ const CoreServices = () => (
       </div>
 
       {/* 01 - Tenant Selection */}
-      <ServiceModule number="01" title="Tenant Selection" icon={UserCheckIcon} id_string="APPROVAL_CRITERIA: STRICT | DEFAULT_RATE: <2%">
+      <ServiceModule id="tenant-selection" number="01" title="Tenant Selection" icon={UserCheckIcon} id_string="APPROVAL_CRITERIA: STRICT | DEFAULT_RATE: <2%">
         <SubHeading>Good management starts at application.</SubHeading>
         <BodyText className="mb-8 md:mb-10 text-base md:text-xl text-pretty">
           The primary component of a successful tenancy is selecting the right tenant from day one. We invest heavily in this phase because it determines everything that follows.
@@ -286,7 +286,7 @@ const CoreServices = () => (
       </ServiceModule>
 
       {/* 03 - Rent Payments & Statements */}
-      <ServiceModule number="03" title="Rent Payments & Statements" icon={Calendar} id_string="PAYMENT_CYCLE: WEEKLY | STATEMENTS: AUTOMATED">
+      <ServiceModule id="financial-reporting" number="03" title="Rent Payments & Statements" icon={Calendar} id_string="PAYMENT_CYCLE: WEEKLY | STATEMENTS: AUTOMATED">
         <SubHeading>Weekly payments. Faster cashflow.</SubHeading>
         <BodyText className="mb-8 md:mb-10 text-base md:text-xl text-pretty">
           Most property management firms pay landlords fortnightly or monthly. We pay weekly—because it's your money and you shouldn't have to wait for it.
@@ -603,7 +603,7 @@ const LandlordServices = () => {
       <section className="py-32 bg-wash border-t-2 border-navy">
         <Container className="text-center">
           <Tag>INITIATE_SEQUENCE</Tag>
-          <Heading className="mb-12">Ready to optimize your<br />property performance?</Heading>
+          <Heading className="mb-12">Ready to optimise your<br />property performance?</Heading>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
             <Button className="h-20 px-12 bg-navy text-white font-mono text-sm font-bold uppercase tracking-[0.2em] rounded-none hover:bg-teal hover:text-navy hover:shadow-[4px_4px_0px_#0F172A] transition-all w-full sm:w-auto border-2 border-navy">
               [ Get Started ]

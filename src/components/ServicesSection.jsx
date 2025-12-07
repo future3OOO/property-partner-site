@@ -1,18 +1,12 @@
 import React from 'react';
 import { ArrowRight, Shield, Users, FileCheck, BarChart3, Terminal } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const ServiceCard = ({ icon: Icon, title, desc, id, className, variant = 'default' }) => {
+const ServiceCard = ({ icon: Icon, title, desc, id, className, variant = 'default', to }) => {
   const isFeatured = variant === 'featured';
 
-  return (
-    <div className={`
-      flex flex-col justify-between group hover:-translate-y-1 transition-all duration-300 shadow-hard hover:shadow-hard-lg 
-      ${isFeatured
-        ? 'bg-navy border-2 border-teal hover:border-white'
-        : 'bg-white border-2 border-navy hover:border-teal'} 
-      ${className}
-    `}>
-
+  const Content = () => (
+    <>
       {/* TERMINAL HEADER */}
       <div className={`p-2 flex justify-between items-center transition-colors duration-300 ${isFeatured ? 'bg-teal group-hover:bg-white' : 'bg-navy group-hover:bg-teal'}`}>
         <div className="flex items-center gap-2">
@@ -56,6 +50,28 @@ const ServiceCard = ({ icon: Icon, title, desc, id, className, variant = 'defaul
           Execute_Function <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
+    </>
+  );
+
+  const containerClasses = `
+      flex flex-col justify-between group hover:-translate-y-1 transition-all duration-300 shadow-hard hover:shadow-hard-lg block
+      ${isFeatured
+      ? 'bg-navy border-2 border-teal hover:border-white'
+      : 'bg-white border-2 border-navy hover:border-teal'} 
+      ${className}
+    `;
+
+  if (to) {
+    return (
+      <Link to={to} className={containerClasses}>
+        <Content />
+      </Link>
+    );
+  }
+
+  return (
+    <div className={containerClasses}>
+      <Content />
     </div>
   );
 }
@@ -87,6 +103,7 @@ const ServicesSection = () => {
             title="Property Management"
             desc="Full-service property management including rent collection, maintenance coordination, and regular inspections. We handle the day-to-day operations with algorithmic precision."
             variant="featured"
+            to="/landlord-services"
           />
 
           <ServiceCard

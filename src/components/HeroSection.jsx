@@ -116,7 +116,7 @@ const HeroSection = () => {
             {/* Floating Element - Positioned INSIDE to prevent page break overlap */}
             <div className="absolute bottom-8 left-0 right-0 mx-auto w-max md:bottom-12 md:left-6 md:right-auto bg-teal text-navy p-2 md:p-4 border-2 border-navy shadow-hard-sm z-20">
               <div className="font-black text-sm md:text-lg leading-tight text-center md:text-left">
-                CASH FLOW <br /> OPTIMIZED
+                CASH FLOW <br /> OPTIMISED
               </div>
             </div>
           </div>

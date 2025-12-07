@@ -59,12 +59,12 @@ const Header = () => {
         {/* Brand Identity */}
         {/* Brand Identity */}
         <Link to="/" className="flex items-end gap-1 md:gap-2 group min-w-0">
-          <img src="/logo.png" alt="Property Partner" className="h-10 md:h-16 w-auto object-contain shrink-0" />
+          <img src="/logo.png" alt="Property Partner" className="h-12 md:h-16 w-auto object-contain shrink-0" />
           <div className="flex flex-col justify-center min-w-0 pb-2.5">
-            <span className="font-black text-xs md:text-lg tracking-tighter text-navy leading-[0.9] md:leading-[0.9] group-hover:text-teal transition-colors whitespace-nowrap">
+            <span className="font-black text-sm md:text-lg tracking-tighter text-navy leading-[0.9] md:leading-[0.9] group-hover:text-teal transition-colors whitespace-nowrap">
               PROPERTY
             </span>
-            <span className="font-black text-xs md:text-lg tracking-tighter text-navy leading-[0.9] md:leading-[0.9] md:-mt-0.5 group-hover:text-teal transition-colors whitespace-nowrap">
+            <span className="font-black text-sm md:text-lg tracking-tighter text-navy leading-[0.9] md:leading-[0.9] md:-mt-0.5 group-hover:text-teal transition-colors whitespace-nowrap">
               PARTNER
             </span>
           </div>
@@ -89,7 +89,7 @@ const Header = () => {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] bg-white border-4 border-navy">
-                    <li className="row-span-3">
+                    <li className="row-span-4">
                       <NavigationMenuLink asChild>
                         <a
                           className="flex h-full w-full select-none flex-col justify-end bg-navy p-6 no-underline outline-none focus:shadow-md"
@@ -104,16 +104,14 @@ const Header = () => {
                         </a>
                       </NavigationMenuLink>
                     </li>
-                    <ListItem href="/management-agreement" title="Management Agreement">
-                      Start your journey with us.
+                    <ListItem href="#" title="Management Agreement" className="opacity-50 cursor-not-allowed pointer-events-none">
+                      Start your journey with us. (Coming Soon)
                     </ListItem>
-                    <ListItem href="#" title="Property Management">
+                    <ListItem href="/landlord-services#core-services" title="Property Management">
                       Full-service operational oversight.
                     </ListItem>
-                    <ListItem href="#" title="Tenant Screening">
-                      Rigorous background checks.
-                    </ListItem>
-                    <ListItem href="#" title="Financial Reporting">
+
+                    <ListItem href="/landlord-services#financial-reporting" title="Financial Reporting">
                       Real-time ledger access.
                     </ListItem>
                     <ListItem href="/knowledge-base" title="Knowledge Base">
@@ -128,11 +126,26 @@ const Header = () => {
                   For Tenants
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-white border-4 border-navy">
-                    <ListItem href="/tenant-services" title="Tenant Services">
-                      Everything you need as a resident.
-                    </ListItem>
-                    <ListItem href="/services/maintenance" title="Maintenance Request">
+                  <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] bg-white border-4 border-navy">
+                    <li className="row-span-4">
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="flex h-full w-full select-none flex-col justify-end bg-teal p-6 no-underline outline-none focus:shadow-md border-2 border-navy relative overflow-hidden group"
+                          href="/tenant-services"
+                        >
+                          <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.05)_1px,transparent_1px)] bg-[size:1rem_1rem]" />
+                          <div className="relative z-10">
+                            <div className="mt-4 mb-2 text-lg font-black text-navy uppercase tracking-tight group-hover:underline decoration-4 decoration-white underline-offset-4">
+                              Tenant Services
+                            </div>
+                            <p className="text-xs font-mono text-navy/80 leading-tight font-bold">
+                              Everything you need for a successful tenancy.
+                            </p>
+                          </div>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <ListItem href="/services/maintenance" title="Maintenance">
                       Report issues instantly.
                     </ListItem>
                     <ListItem href="/tenant-resources" title="Resources">
@@ -150,7 +163,6 @@ const Header = () => {
                     <ListItem href="/knowledge-base" title="Knowledge Base">
                       FAQ & Policy Database
                     </ListItem>
-
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -172,7 +184,7 @@ const Header = () => {
                     <ListItem href="/knowledge-base" title="Knowledge Base">
                       FAQ & Policy Database
                     </ListItem>
-                    <ListItem href="#" title="Blog">
+                    <ListItem href="/blog" title="Blog">
                       Industry insights and news.
                     </ListItem>
                     <ListItem href="#" title="Guides">
@@ -225,8 +237,8 @@ const Header = () => {
         {/* Mobile Menu Trigger */}
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="lg:hidden rounded-none h-10 w-10 md:h-12 md:w-12 border-2 border-transparent hover:border-navy shrink-0">
-              <Menu className="w-6 h-6 md:w-8 md:h-8 text-navy" />
+            <Button variant="ghost" size="icon" className="lg:hidden rounded-none h-12 w-12 md:h-12 md:w-12 border-2 border-transparent hover:border-navy shrink-0">
+              <Menu className="w-8 h-8 md:w-8 md:h-8 text-navy" />
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-full sm:w-[400px] bg-paper border-l-4 border-navy p-0 overflow-y-auto z-[1000]">
@@ -248,9 +260,9 @@ const Header = () => {
                   <div className="text-xl font-black uppercase text-navy mb-4 text-teal">For Owners</div>
                   <div className="pl-4 flex flex-col gap-3">
                     <Link to="/landlord-services" onClick={() => setIsMenuOpen(false)} className="font-mono text-sm font-bold text-navy">Landlord Services</Link>
-                    <Link to="/management-agreement" onClick={() => setIsMenuOpen(false)} className="font-mono text-sm text-ink-light">Management Agreement</Link>
+                    <span className="font-mono text-sm text-ink-light opacity-50 cursor-not-allowed">Management Agreement (Coming Soon)</span>
                     <span className="font-mono text-sm text-ink-light">Property Management</span>
-                    <span className="font-mono text-sm text-ink-light">Tenant Screening</span>
+
                     <Link to="/knowledge-base" onClick={() => setIsMenuOpen(false)} className="font-mono text-sm font-bold text-navy">Knowledge Base</Link>
                   </div>
                 </div>
@@ -294,7 +306,7 @@ const Header = () => {
                   <a href="https://client.propertytree.com/login" target="_blank" rel="noopener noreferrer" className="w-full text-center font-mono text-sm font-bold uppercase tracking-widest text-navy py-4 border-2 border-navy">
                     Sign In
                   </a>
-                  <Button 
+                  <Button
                     onClick={handleMobileGetStarted}
                     className="w-full h-14 bg-navy text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none border-2 border-navy"
                   >

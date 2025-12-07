@@ -22,11 +22,11 @@ const Index = () => {
     <div className="flex flex-col min-h-screen">
       <Helmet>
         <title>Property Partner | Christchurch Property Management | Property Partner</title>
-        <meta name="description" content="Professional property management in Christchurch, NZ. 8% + GST flat rate, no hidden fees. Trusted by landlords across Canterbury for tenant finding, maintenance, and full property management." />
+        <meta name="description" content="Professional Christchurch property management. Flat 8% + GST fee. No hidden costs. Expert tenant finding & maintenance for Canterbury landlords." />
         <meta name="keywords" content="property management Christchurch, property manager NZ, rental management Canterbury, landlord services Christchurch" />
         <link rel="canonical" href="https://propertypartner.co.nz/" />
         <meta property="og:title" content="Property Partner | Christchurch Property Management | Property Partner" />
-        <meta property="og:description" content="Professional property management in Christchurch, NZ. 8% + GST flat rate, no hidden fees. Trusted by landlords across Canterbury for tenant finding, maintenance, and full property management." />
+        <meta property="og:description" content="Professional Christchurch property management. Flat 8% + GST fee. No hidden costs. Expert tenant finding & maintenance for Canterbury landlords." />
         <meta property="og:url" content="https://propertypartner.co.nz/" />
       </Helmet>
       <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />

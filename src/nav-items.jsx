@@ -13,6 +13,7 @@ import MoveOutChecklist from "./pages/MoveOutChecklist.jsx";
 import KnowledgeBase from "./pages/KnowledgeBase.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import TermsOfService from "./pages/TermsOfService.jsx";
+import Blog from "./pages/Blog.jsx";
 import Contact from "./pages/Contact.jsx";
 
 export const navItems = [
@@ -94,6 +95,12 @@ export const navItems = [
     to: "/terms",
     icon: <FileText className="h-4 w-4" />,
     page: <TermsOfService />,
+  },
+  {
+    title: "Blog",
+    to: "/blog",
+    icon: <FileText className="h-4 w-4" />,
+    page: <Blog />,
   },
   {
     title: "Contact",
