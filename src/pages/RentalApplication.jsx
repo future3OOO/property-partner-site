@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ExternalLink, CheckCircle, AlertCircle, FileText, ArrowRight, Clock, ShieldCheck } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
@@ -9,6 +10,15 @@ const RentalApplication = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-wash">
+      <Helmet>
+        <title>Rental Application | Property Partner Christchurch | Property Partner</title>
+        <meta name="description" content="Apply for rental properties in Christchurch. Easy online rental application process with Property Partner." />
+        <meta name="keywords" content="rental application Christchurch, apply for rental NZ, tenant application Canterbury" />
+        <link rel="canonical" href="https://propertypartner.co.nz/rental-application" />
+        <meta property="og:title" content="Rental Application | Property Partner Christchurch | Property Partner" />
+        <meta property="og:description" content="Apply for rental properties in Christchurch. Easy online rental application process with Property Partner." />
+        <meta property="og:url" content="https://propertypartner.co.nz/rental-application" />
+      </Helmet>
       <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
 
       <main className="flex-grow pt-24">

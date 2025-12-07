@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import {
     CheckCircle, Circle, Calendar, Mail, Phone, User, Home, Clock,
     TrendingUp, Award, AlertTriangle, Sparkles, Droplets, Wind,
@@ -280,6 +281,15 @@ const MoveOutChecklist = () => {
 
         return (
             <div className="mb-6 break-inside-avoid">
+      <Helmet>
+        <title>Move Out Checklist | Property Partner Christchurch | Property Partner</title>
+        <meta name="description" content="Complete move out checklist for tenants in Christchurch. Ensure a smooth end of tenancy with Property Partner." />
+        <meta name="keywords" content="move out checklist Christchurch, end of tenancy NZ, tenant checklist Canterbury" />
+        <link rel="canonical" href="https://propertypartner.co.nz/check-list" />
+        <meta property="og:title" content="Move Out Checklist | Property Partner Christchurch | Property Partner" />
+        <meta property="og:description" content="Complete move out checklist for tenants in Christchurch. Ensure a smooth end of tenancy with Property Partner." />
+        <meta property="og:url" content="https://propertypartner.co.nz/check-list" />
+      </Helmet>
                 <div className="flex items-center justify-between mb-4 border-b-2 border-navy/10 pb-2">
                     <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-navy text-white flex items-center justify-center">

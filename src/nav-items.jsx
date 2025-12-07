@@ -13,6 +13,7 @@ import MoveOutChecklist from "./pages/MoveOutChecklist.jsx";
 import KnowledgeBase from "./pages/KnowledgeBase.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import TermsOfService from "./pages/TermsOfService.jsx";
+import Contact from "./pages/Contact.jsx";
 
 export const navItems = [
   {
@@ -35,7 +36,7 @@ export const navItems = [
   },
   {
     title: "Pricing",
-    to: "/pricing",
+    to: "/fees",
     icon: <DollarSignIcon className="h-4 w-4" />,
     page: <Pricing />,
   },
@@ -93,5 +94,11 @@ export const navItems = [
     to: "/terms",
     icon: <FileText className="h-4 w-4" />,
     page: <TermsOfService />,
+  },
+  {
+    title: "Contact",
+    to: "/contact",
+    icon: <FileText className="h-4 w-4" />,
+    page: <Contact />,
   },
 ];

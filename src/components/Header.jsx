@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import ContactDialog from "@/components/ContactDialog";
 import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -207,9 +208,11 @@ const Header = () => {
           <a href="https://client.propertytree.com/login" target="_blank" rel="noopener noreferrer" className="font-mono text-sm font-bold uppercase tracking-widest text-navy hover:text-teal hover:underline decoration-2 underline-offset-4 decoration-teal">
             Sign In
           </a>
-          <Button className="h-12 px-8 bg-navy text-white font-mono text-xs font-bold uppercase tracking-widest rounded-none hover:bg-teal hover:text-navy hover:shadow-hard transition-all border-2 border-navy">
-            Get Started
-          </Button>
+          <ContactDialog>
+            <Button className="h-12 px-8 bg-navy text-white font-mono text-xs font-bold uppercase tracking-widest rounded-none hover:bg-teal hover:text-navy hover:shadow-hard transition-all border-2 border-navy">
+              Get Started
+            </Button>
+          </ContactDialog>
         </div>
 
         {/* Mobile Menu Trigger */}
@@ -284,9 +287,11 @@ const Header = () => {
                   <a href="https://client.propertytree.com/login" target="_blank" rel="noopener noreferrer" className="w-full text-center font-mono text-sm font-bold uppercase tracking-widest text-navy py-4 border-2 border-navy">
                     Sign In
                   </a>
+                  <ContactDialog>
                   <Button className="w-full h-14 bg-navy text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none border-2 border-navy">
                     Get Started
                   </Button>
+                </ContactDialog>
                 </div>
               </nav>
             </div>

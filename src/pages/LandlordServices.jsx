@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
@@ -82,6 +83,15 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 bg-wash overflow-hidden border-b-2 border-navy">
+      <Helmet>
+        <title>Landlord Services Christchurch | Property Partner</title>
+        <meta name="description" content="Complete property management services for Christchurch landlords. Tenant finding, rent collection, maintenance coordination, and property inspections. 8% + GST flat rate." />
+        <meta name="keywords" content="landlord services Christchurch, property management for landlords, tenant finding NZ, rent collection Canterbury" />
+        <link rel="canonical" href="https://propertypartner.co.nz/landlord-services" />
+        <meta property="og:title" content="Landlord Services Christchurch | Property Partner" />
+        <meta property="og:description" content="Complete property management services for Christchurch landlords. Tenant finding, rent collection, maintenance coordination, and property inspections. 8% + GST flat rate." />
+        <meta property="og:url" content="https://propertypartner.co.nz/landlord-services" />
+      </Helmet>
       {/* Tech Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 

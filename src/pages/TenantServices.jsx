@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Home, Wrench, FolderOpen, Plus, Minus, CreditCard, MessageSquare, Phone, ArrowRight, Search, ClipboardCheck, ExternalLink } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -73,6 +74,15 @@ const TenantServices = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-wash">
+      <Helmet>
+        <title>Tenant Services Christchurch | Property Partner</title>
+        <meta name="description" content="Comprehensive tenant services in Christchurch. Easy rental applications, maintenance requests, and dedicated support for renters across Canterbury." />
+        <meta name="keywords" content="tenant services Christchurch, rental support NZ, maintenance requests Canterbury, renter support" />
+        <link rel="canonical" href="https://propertypartner.co.nz/tenant-services" />
+        <meta property="og:title" content="Tenant Services Christchurch | Property Partner" />
+        <meta property="og:description" content="Comprehensive tenant services in Christchurch. Easy rental applications, maintenance requests, and dedicated support for renters across Canterbury." />
+        <meta property="og:url" content="https://propertypartner.co.nz/tenant-services" />
+      </Helmet>
       <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
 
       <main className="flex-grow pt-24">

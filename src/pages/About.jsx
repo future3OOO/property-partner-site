@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Award, Users, ShieldCheck, ArrowRight, UserCheck, Handshake, HeartHandshake, Rocket, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
@@ -39,6 +40,15 @@ const About = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-wash font-sans selection:bg-teal selection:text-navy">
+      <Helmet>
+        <title>About Us | Property Partner Christchurch | Property Partner</title>
+        <meta name="description" content="Learn about Property Partner, Christchurch trusted property management company. Our team, values, and commitment to landlords and tenants across Canterbury." />
+        <meta name="keywords" content="about Property Partner, Christchurch property managers, Canterbury property management team" />
+        <link rel="canonical" href="https://propertypartner.co.nz/about" />
+        <meta property="og:title" content="About Us | Property Partner Christchurch | Property Partner" />
+        <meta property="og:description" content="Learn about Property Partner, Christchurch trusted property management company. Our team, values, and commitment to landlords and tenants across Canterbury." />
+        <meta property="og:url" content="https://propertypartner.co.nz/about" />
+      </Helmet>
       <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
 
       <main className="flex-grow pt-24">

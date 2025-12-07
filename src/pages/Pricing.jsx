@@ -30,8 +30,14 @@ const Pricing = () => {
   return (
     <div className="flex flex-col min-h-screen bg-wash">
       <Helmet>
-        <title>Property Management Christchurch fees & costs</title>
-        <meta name="description" content="How much does it cost? 8% + GST flatrate. No hidden charges." />
+        <title>Property Management Christchurch fees & costs | Property Partner</title>
+        <meta name="description" content="How much does it cost? 8% + GST flatrate. No hidden charges. Everything listed is included in our simple 8% + GST management fee. Unlike many other agencies, we do not add extra charges or hidden costs." />
+        <meta name="keywords" content="property management fees Christchurch, property manager costs NZ, 8% property management, rental management pricing, landlord fees Canterbury, property management Christchurch cost" />
+        <link rel="canonical" href="https://propertypartner.co.nz/fees" />
+        <meta property="og:title" content="Property Management Christchurch fees & costs | Property Partner" />
+        <meta property="og:description" content="8% + GST flatrate. No hidden charges. Everything included in our simple management fee." />
+        <meta property="og:url" content="https://propertypartner.co.nz/fees" />
+        <meta property="og:type" content="website" />
       </Helmet>
       <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
 

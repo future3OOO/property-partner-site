@@ -2,28 +2,15 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -35,180 +22,157 @@ const formSchema = z.object({
 const ContactDialog = ({ children }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
 
-  const form = useForm({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      phone: '',
-      message: '',
-    },
+    defaultValues: { name: '', email: '', phone: '', message: '' },
   });
 
   const onSubmit = async (data) => {
     try {
       setIsSubmitting(true);
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          access_key: '12b1952a-91d1-46a2-b785-c82fd38b1a60',
-          from_name: 'Property Partner Website',
-          subject: 'New Contact Form Submission',
-          ...data
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-      
-      if (response.status === 200) {
+      if (response.ok) {
+        setIsSubmitted(true);
         toast.success('Message sent successfully!');
-        form.reset();
-        setIsOpen(false);
+        reset();
       } else {
-        throw new Error(result.message || 'Failed to send message');
+        throw new Error('Failed to send message');
       }
     } catch (error) {
       toast.error('Failed to send message. Please try again.');
-      console.error('Form submission error:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(() => setIsSubmitted(false), 300);
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[900px] p-0 bg-white dark:bg-charcoal overflow-hidden">
-        <div className="grid md:grid-cols-5 h-full">
-          {/* Contact Information Sidebar */}
-          <div className="md:col-span-2 bg-gradient-to-br from-deep-teal to-light-teal dark:from-light-teal dark:to-bright-teal p-8 text-white dark:text-deep-teal">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-white dark:text-deep-teal mb-6">
-                Contact Us
-              </DialogTitle>
-            </DialogHeader>
-            
-            <div className="space-y-6">
-              <p className="text-white/90 dark:text-deep-teal/90">
-                Get in touch with our team. We're here to help with any questions about our property management services.
-              </p>
+    <Dialog open={isOpen} onOpenChange={(open) => { setIsOpen(open); if (!open) setTimeout(() => setIsSubmitted(false), 300); }}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="sm:max-w-[800px] p-0 bg-wash border-4 border-navy rounded-none shadow-[12px_12px_0_0_rgba(10,25,47,0.3)] overflow-hidden">
+        
+        {isSubmitted ? (
+          <div className="p-12 text-center">
+            <div className="w-20 h-20 bg-teal flex items-center justify-center mx-auto mb-8 border-4 border-navy shadow-hard">
+              <CheckCircle2 className="w-10 h-10 text-navy" />
+            </div>
+            <h2 className="text-3xl font-black text-navy uppercase tracking-tighter mb-4">MESSAGE_SENT</h2>
+            <p className="font-mono text-sm text-ink-light mb-8">
+              {'>'} THANK YOU FOR YOUR INQUIRY.<br />
+              {'>'} WE WILL BE IN TOUCH SHORTLY.
+            </p>
+            <Button onClick={handleClose} className="h-14 px-8 bg-navy text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none hover:bg-teal hover:text-navy transition-colors border-2 border-navy">
+              Close
+            </Button>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-5">
+            {/* Contact Info Sidebar */}
+            <div className="md:col-span-2 bg-navy p-8 md:p-10 text-white relative">
+              <div className="absolute top-0 right-0 w-16 h-16 bg-teal" />
               
-              <div className="space-y-4 mt-8">
-                <div className="flex items-center space-x-3">
-                  <Mail className="h-5 w-5" />
-                  <a href="mailto:mckenzie@propertypartner.co.nz" className="hover:underline">
-                    mckenzie@propertypartner.co.nz
+              <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-4 block">{'>'} GET_STARTED</span>
+              <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter mb-6">LET'S TALK</h2>
+              
+              <p className="text-white/70 text-sm leading-relaxed mb-10">
+                Ready to experience hassle-free property management? Fill out the form and we'll get back to you within 24 hours.
+              </p>
+
+              <div className="space-y-6 font-mono text-sm">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-teal/20 flex items-center justify-center border border-teal/30">
+                    <Mail className="w-5 h-5 text-teal" />
+                  </div>
+                  <a href="mailto:hello@propertypartner.co.nz" className="text-teal hover:underline">
+                    hello@propertypartner.co.nz
                   </a>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <Phone className="h-5 w-5" />
-                  <span>+64 123 456 789</span>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-teal/20 flex items-center justify-center border border-teal/30">
+                    <Phone className="w-5 h-5 text-teal" />
+                  </div>
+                  <span className="text-white">03 385 4888</span>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <MapPin className="h-5 w-5" />
-                  <span>123 Property Lane, Christchurch</span>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-teal/20 flex items-center justify-center border border-teal/30">
+                    <MapPin className="w-5 h-5 text-teal" />
+                  </div>
+                  <span className="text-white/70">Christchurch, NZ</span>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Contact Form */}
-          <div className="md:col-span-3 p-8">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Full Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John Doe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
+            {/* Form */}
+            <div className="md:col-span-3 p-8 md:p-10 bg-white">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                <div>
+                  <label className="block font-mono text-xs uppercase tracking-widest text-navy mb-2 font-bold">Full Name</label>
+                  <input
+                    {...register('name')}
+                    placeholder="JOHN DOE"
+                    className="w-full bg-wash border-2 border-navy h-12 px-4 font-mono text-sm text-navy placeholder:text-navy/30 focus:outline-none focus:border-teal transition-colors"
+                  />
+                  {errors.name && <p className="text-red-500 text-xs mt-1 font-mono">{errors.name.message}</p>}
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs uppercase tracking-widest text-navy mb-2 font-bold">Email Address</label>
+                  <input
+                    {...register('email')}
+                    type="email"
+                    placeholder="JOHN@EXAMPLE.COM"
+                    className="w-full bg-wash border-2 border-navy h-12 px-4 font-mono text-sm text-navy placeholder:text-navy/30 focus:outline-none focus:border-teal transition-colors"
+                  />
+                  {errors.email && <p className="text-red-500 text-xs mt-1 font-mono">{errors.email.message}</p>}
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs uppercase tracking-widest text-navy mb-2 font-bold">Phone Number</label>
+                  <input
+                    {...register('phone')}
+                    placeholder="03 385 4888"
+                    className="w-full bg-wash border-2 border-navy h-12 px-4 font-mono text-sm text-navy placeholder:text-navy/30 focus:outline-none focus:border-teal transition-colors"
+                  />
+                  {errors.phone && <p className="text-red-500 text-xs mt-1 font-mono">{errors.phone.message}</p>}
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs uppercase tracking-widest text-navy mb-2 font-bold">Message</label>
+                  <textarea
+                    {...register('message')}
+                    rows="4"
+                    placeholder="HOW CAN WE HELP?"
+                    className="w-full bg-wash border-2 border-navy p-4 font-mono text-sm text-navy placeholder:text-navy/30 focus:outline-none focus:border-teal transition-colors resize-none"
+                  />
+                  {errors.message && <p className="text-red-500 text-xs mt-1 font-mono">{errors.message.message}</p>}
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full h-14 bg-navy text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none hover:bg-teal hover:text-navy hover:shadow-hard transition-all border-2 border-navy"
+                >
+                  {isSubmitting ? (
+                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Sending...</>
+                  ) : (
+                    <><Send className="mr-2 h-5 w-5" /> Send Message</>
                   )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input placeholder="john@example.com" type="email" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
-                      <FormControl>
-                        <Input placeholder="+64 123 456 789" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Message</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="How can we help you?"
-                          className="min-h-[120px]"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <AnimatePresence>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                  >
-                    <Button
-                      type="submit"
-                      className="w-full bg-deep-teal hover:bg-light-teal dark:bg-light-teal dark:hover:bg-deep-teal text-white dark:text-deep-teal font-medium"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        "Sending..."
-                      ) : (
-                        <>
-                          Send Message
-                          <Send className="ml-2 h-4 w-4" />
-                        </>
-                      )}
-                    </Button>
-                  </motion.div>
-                </AnimatePresence>
+                </Button>
               </form>
-            </Form>
+            </div>
           </div>
-        </div>
+        )}
       </DialogContent>
     </Dialog>
   );

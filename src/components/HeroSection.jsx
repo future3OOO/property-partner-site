@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Terminal, CheckCircle2, TrendingUp } from 'lucide-react';
+import ContactDialog from '@/components/ContactDialog';
 
 const HeroSection = () => {
   return (
@@ -31,9 +32,11 @@ const HeroSection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-8 md:mb-10">
-              <button className="anti-btn shadow-hard w-full sm:w-auto h-14 md:h-16 flex items-center justify-center text-sm md:text-base">
-                Get Started Now
-              </button>
+              <ContactDialog>
+                <button className="anti-btn shadow-hard w-full sm:w-auto h-14 md:h-16 flex items-center justify-center text-sm md:text-base">
+                  Get Started Now
+                </button>
+              </ContactDialog>
               <button className="font-mono text-xs md:text-sm font-bold uppercase tracking-widest text-navy hover:text-teal underline decoration-2 underline-offset-4 decoration-teal h-14 md:h-16 flex items-center justify-center sm:justify-start">
                 Contact Us
               </button>

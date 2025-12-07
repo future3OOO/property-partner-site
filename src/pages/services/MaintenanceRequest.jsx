@@ -1,28 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Send, AlertTriangle, Hammer, Home, Clock, CheckCircle, AlertCircle, Phone, ArrowRight, MessageSquare } from "lucide-react";
+import { Helmet } from 'react-helmet-async';
+import { Send, AlertTriangle, Hammer, Home, Clock, CheckCircle, AlertCircle, Phone, ArrowRight, MessageSquare, Loader2, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { toast } from "sonner";
 import { Link } from 'react-router-dom';
 
-const InputField = ({ label, type = "text", placeholder }) => (
+const InputField = ({ label, type = "text", placeholder, name, value, onChange, required }) => (
   <div className="mb-6">
     <label className="block font-mono text-xs uppercase tracking-widest text-navy mb-2 font-bold">{label}</label>
     <input
       type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
       placeholder={placeholder}
+      required={required}
       className="w-full bg-wash border-2 border-navy h-12 px-4 font-mono text-sm text-navy placeholder:text-navy/30 focus:outline-none focus:border-teal transition-colors rounded-none"
     />
   </div>
 );
 
-const TextAreaField = ({ label, placeholder }) => (
+const TextAreaField = ({ label, placeholder, name, value, onChange, required }) => (
   <div className="mb-6">
     <label className="block font-mono text-xs uppercase tracking-widest text-navy mb-2 font-bold">{label}</label>
     <textarea
       rows="4"
+      name={name}
+      value={value}
+      onChange={onChange}
       placeholder={placeholder}
+      required={required}
       className="w-full bg-wash border-2 border-navy p-4 font-mono text-sm text-navy placeholder:text-navy/30 focus:outline-none focus:border-teal transition-colors rounded-none resize-none"
     />
   </div>
@@ -30,10 +39,48 @@ const TextAreaField = ({ label, placeholder }) => (
 
 const MaintenanceRequest = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [photos, setPhotos] = useState([]);
+  const [formData, setFormData] = useState({
+    address: "", unit: "", category: "", description: "",
+    name: "", email: "", phone: ""
+  });
 
-  const handleSubmit = (e) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handlePhotoChange = (e) => {
+    const files = Array.from(e.target.files);
+    setPhotos(prev => [...prev, ...files].slice(0, 5)); // Max 5 photos
+  };
+
+  const removePhoto = (index) => {
+    setPhotos(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success("TICKET_LOGGED: DISPATCHING PROTOCOLS");
+    setIsSubmitting(true);
+    try {
+      const form = new FormData();
+      Object.entries(formData).forEach(([k, v]) => form.append(k, v));
+      photos.forEach(p => form.append("photos", p));
+      
+      const response = await fetch("/api/maintenance", { method: "POST", body: form });
+      if (response.ok) {
+        setIsSubmitted(true);
+        toast.success("TICKET_LOGGED: DISPATCHING PROTOCOLS");
+      } else {
+        throw new Error("Failed");
+      }
+    } catch (err) {
+      toast.error("Failed to submit. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -49,6 +96,12 @@ const MaintenanceRequest = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-wash">
+      <Helmet>
+        <title>Maintenance Request | Property Partner Christchurch</title>
+        <meta name="description" content="Submit a maintenance request for your rental property in Christchurch. Fast response times and professional service from Property Partner." />
+        <meta name="keywords" content="maintenance request Christchurch, rental repairs NZ, property maintenance Canterbury" />
+        <link rel="canonical" href="https://propertypartner.co.nz/services/maintenance" />
+      </Helmet>
       <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
 
       <main className="flex-grow pt-24">
@@ -240,6 +293,25 @@ const MaintenanceRequest = () => {
             </div>
 
             <div className="max-w-2xl mx-auto border-4 border-white/20 bg-white p-8 md:p-12 shadow-[8px_8px_0_0_rgba(255,255,255,0.1)] relative">
+              {isSubmitted ? (
+                <div className="text-center py-16">
+                  <div className="w-20 h-20 bg-teal flex items-center justify-center mx-auto mb-8 border-4 border-navy">
+                    <CheckCircle className="w-10 h-10 text-navy" />
+                  </div>
+                  <h3 className="text-3xl font-black text-navy uppercase tracking-tighter mb-4">TICKET_SUBMITTED</h3>
+                  <p className="font-mono text-sm text-navy/70 mb-8">
+                    Your maintenance request has been logged.<br/>
+                    You will receive a confirmation email shortly.
+                  </p>
+                  <Button 
+                    onClick={() => { setIsSubmitted(false); setFormData({address: "", unit: "", category: "", description: "", name: "", email: "", phone: ""}); setPhotos([]); }}
+                    className="h-14 px-8 bg-navy text-white font-mono font-bold uppercase tracking-widest rounded-none border-2 border-navy hover:bg-teal hover:text-navy"
+                  >
+                    Submit Another Request
+                  </Button>
+                </div>
+              ) : (
+              <>
               {/* Warning Strip */}
               <div className="bg-orange-500/10 border-l-4 border-orange-500 p-4 mb-8 flex items-start gap-4">
                 <AlertTriangle className="w-6 h-6 text-orange-600 shrink-0" />
@@ -255,31 +327,66 @@ const MaintenanceRequest = () => {
 
                 <div className="mb-8 border-b-2 border-navy/10 pb-8">
                   <h2 className="text-xl font-black text-navy uppercase mb-6 flex items-center gap-2">
+                    <Home className="w-5 h-5" /> Your Details
+                  </h2>
+                  <InputField label="Your Name" name="name" value={formData.name} onChange={handleInputChange} placeholder="FULL_NAME" required />
+                  <InputField label="Email" name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder="EMAIL_ADDRESS" required />
+                  <InputField label="Phone" name="phone" type="tel" value={formData.phone} onChange={handleInputChange} placeholder="PHONE_NUMBER" required />
+                </div>
+
+                <div className="mb-8 border-b-2 border-navy/10 pb-8">
+                  <h2 className="text-xl font-black text-navy uppercase mb-6 flex items-center gap-2">
                     <Home className="w-5 h-5" /> Location Data
                   </h2>
                   <InputField label="Property Address" placeholder="ENTER_FULL_ADDRESS" />
-                  <InputField label="Unit / Apartment No." placeholder="OPTIONAL" />
+                  <InputField label="Unit / Apartment No." name="unit" value={formData.unit} onChange={handleInputChange} placeholder="OPTIONAL" />
                 </div>
 
                 <div className="mb-8 border-b-2 border-navy/10 pb-8">
                   <h2 className="text-xl font-black text-navy uppercase mb-6 flex items-center gap-2">
                     <Hammer className="w-5 h-5" /> Issue Details
                   </h2>
-                  <InputField label="Issue Category" placeholder="PLUMBING / ELECTRICAL / STRUCTURAL" />
-                  <TextAreaField label="Description" placeholder="DESCRIBE_ISSUE_IN_DETAIL..." />
+                  <InputField label="Issue Category" name="category" value={formData.category} onChange={handleInputChange} placeholder="PLUMBING / ELECTRICAL / STRUCTURAL" />
+                  <TextAreaField label="Description" name="description" value={formData.description} onChange={handleInputChange} placeholder="DESCRIBE_ISSUE_IN_DETAIL..." />
 
-                  <div className="bg-wash border-2 border-navy border-dashed p-8 text-center cursor-pointer hover:bg-teal/10 transition-colors">
-                    <span className="font-mono text-xs font-bold text-navy uppercase tracking-widest block mb-2">Upload Evidence</span>
-                    <span className="font-mono text-[10px] text-ink-light block">JPG / PNG / MP4 (MAX 10MB)</span>
+                  <div className="mb-6">
+                    <label className="block font-mono text-xs uppercase tracking-widest text-navy mb-2 font-bold">Upload Photos (Optional - Max 5)</label>
+                    <label className="bg-wash border-2 border-navy border-dashed p-8 text-center cursor-pointer hover:bg-teal/10 transition-colors block">
+                      <input type="file" accept="image/*" multiple onChange={handlePhotoChange} className="hidden" />
+                      <Upload className="w-8 h-8 mx-auto mb-2 text-navy/50" />
+                      <span className="font-mono text-xs font-bold text-navy uppercase tracking-widest block mb-2">Click to Upload Photos</span>
+                      <span className="font-mono text-[10px] text-ink-light block">JPG / PNG (MAX 10MB EACH)</span>
+                    </label>
+                    {photos.length > 0 && (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {photos.map((photo, idx) => (
+                          <div key={idx} className="relative bg-navy/10 px-3 py-1 flex items-center gap-2 rounded">
+                            <span className="font-mono text-xs text-navy">{photo.name.slice(0,15)}...</span>
+                            <button type="button" onClick={() => removePhoto(idx)} className="text-red-500 hover:text-red-700">
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                <Button className="w-full h-16 bg-navy text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none hover:bg-teal hover:text-navy hover:shadow-hard transition-all border-2 border-navy">
-                  Submit Ticket <Send className="ml-2 h-5 w-5" />
+                <Button 
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full h-16 bg-navy text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none hover:bg-teal hover:text-navy hover:shadow-hard transition-all border-2 border-navy disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Submitting...</>
+                  ) : (
+                    <>Submit Ticket <Send className="ml-2 h-5 w-5" /></>
+                  )}
                 </Button>
 
               </form>
-
+              </>
+              )}
             </div>
           </div>
         </section>

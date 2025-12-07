@@ -1,8 +1,10 @@
-from fastapi import FastAPI, Form, HTTPException
+from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -23,7 +25,7 @@ SMTP_USER = "hello@propertypartner.co.nz"
 SMTP_PASS = "uspi yvon utjt efts"
 TO_EMAIL = "hello@propertypartner.co.nz"
 
-def send_email(subject: str, body: str, reply_to: str = None):
+def send_email(subject: str, body: str, reply_to: str = None, attachments: list = None):
     msg = MIMEMultipart()
     msg["Subject"] = subject
     msg["From"] = SMTP_USER
@@ -31,6 +33,17 @@ def send_email(subject: str, body: str, reply_to: str = None):
     if reply_to:
         msg["Reply-To"] = reply_to
     msg.attach(MIMEText(body, "plain"))
+    
+    # Attach files
+    if attachments:
+        for filename, file_content, content_type in attachments:
+            # Determine MIME type
+            maintype, subtype = (content_type or "application/octet-stream").split("/", 1) if "/" in (content_type or "") else ("application", "octet-stream")
+            part = MIMEBase(maintype, subtype)
+            part.set_payload(file_content)
+            encoders.encode_base64(part)
+            part.add_header("Content-Disposition", "attachment", filename=filename)
+            msg.attach(part)
     
     try:
         with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
@@ -48,12 +61,22 @@ async def health():
     return {"status": "ok"}
 
 @app.post("/contact")
-async def contact_form(
-    name: str = Form(...),
-    email: str = Form(...),
-    phone: str = Form(""),
-    message: str = Form("")
-):
+async def contact_form(request: Request):
+    content_type = request.headers.get("content-type", "")
+    
+    if "application/json" in content_type:
+        data = await request.json()
+        name = data.get("name", "")
+        email = data.get("email", "")
+        phone = data.get("phone", "")
+        message = data.get("message", "")
+    else:
+        form = await request.form()
+        name = form.get("name", "")
+        email = form.get("email", "")
+        phone = form.get("phone", "")
+        message = form.get("message", "")
+    
     body = f"""New Contact Form Submission
 ----------------------------------------
 Name: {name}
@@ -105,3 +128,51 @@ Sent from propertypartner.co.nz
     send_email(f"[Property Partner] New Newsletter Signup: {email}", body)
     return {"status": "subscribed", "message": "Thanks for subscribing!"}
 
+@app.post("/maintenance")
+async def maintenance_form(request: Request):
+    form = await request.form()
+    
+    address = form.get("address", "")
+    unit = form.get("unit", "")
+    category = form.get("category", "")
+    description = form.get("description", "")
+    name = form.get("name", "")
+    email = form.get("email", "")
+    phone = form.get("phone", "")
+    
+    # Handle file uploads - get all items and check for UploadFile objects
+    attachments = []
+    for key, value in form.multi_items():
+        if key == "photos" and hasattr(value, "read") and hasattr(value, "filename"):
+            file_content = await value.read()
+            if file_content and value.filename:
+                attachments.append((value.filename, file_content, value.content_type or "image/png"))
+    
+    attachment_count = len(attachments)
+    
+    body = f"""New Maintenance Request (Legacy Form)
+========================================
+Contact Details:
+  Name: {name}
+  Email: {email}
+  Phone: {phone}
+
+Property Details:
+  Address: {address}
+  Unit: {unit}
+
+Issue Details:
+  Category: {category}
+  Description: {description}
+
+Attachments: {attachment_count} photo(s) attached
+========================================
+Sent from propertypartner.co.nz (Legacy Form)
+"""
+    send_email(
+        f"[Property Partner] Maintenance Request - {address}", 
+        body, 
+        reply_to=email,
+        attachments=attachments if attachments else None
+    )
+    return {"status": "sent", "message": "Maintenance request submitted!"}

@@ -1,0 +1,9 @@
+# Robots.txt for propertypartner.co.nz
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://propertypartner.co.nz/sitemap.xml
+
+# Disallow admin/api routes
+Disallow: /api/
