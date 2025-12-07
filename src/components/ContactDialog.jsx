@@ -9,8 +9,11 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
+  DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -60,7 +63,13 @@ const ContactDialog = ({ children }) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { setIsOpen(open); if (!open) setTimeout(() => setIsSubmitted(false), 300); }}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="w-[95vw] max-w-[800px] max-h-[90vh] p-0 bg-wash border-4 border-navy rounded-none shadow-[8px_8px_0_0_rgba(10,25,47,0.3)] md:shadow-[12px_12px_0_0_rgba(10,25,47,0.3)] overflow-hidden">
+      <DialogContent 
+        className="w-[95vw] max-w-[800px] max-h-[90vh] p-0 bg-wash border-4 border-navy rounded-none shadow-[8px_8px_0_0_rgba(10,25,47,0.3)] md:shadow-[12px_12px_0_0_rgba(10,25,47,0.3)] overflow-hidden"
+        aria-describedby={undefined}
+      >
+        <VisuallyHidden>
+          <DialogTitle>Contact Property Partner</DialogTitle>
+        </VisuallyHidden>
 
         {isSubmitted ? (
           <div className="p-6 md:p-12 text-center">
@@ -195,6 +204,5 @@ const ContactDialog = ({ children }) => {
     </Dialog>
   );
 };
-
 
 export default ContactDialog;
