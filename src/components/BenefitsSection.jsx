@@ -1,94 +1,62 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { DollarSign, Camera, ClipboardCheck, Search, PhoneCall, UserCircle2, LayoutDashboard, LineChart } from 'lucide-react';
-import { Card } from "@/components/ui/card";
+import { Check, Star, Zap, Shield, Smartphone, FileText, UserCheck, PieChart } from 'lucide-react';
 
-const benefits = [
-  {
-    icon: DollarSign,
-    title: "Transparent Pricing",
-    description: "No hidden fees - transparent 8.5% management fee"
-  },
-  {
-    icon: Camera,
-    title: "Professional Media",
-    description: "Professional photography included"
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Detailed Reports",
-    description: "Detailed property condition reports"
-  },
-  {
-    icon: Search,
-    title: "Regular Inspections",
-    description: "Regular property inspections"
-  },
-  {
-    icon: PhoneCall,
-    title: "24/7 Support",
-    description: "24/7 maintenance coordination"
-  },
-  {
-    icon: UserCircle2,
-    title: "Personal Manager",
-    description: "Dedicated property manager"
-  },
-  {
-    icon: LayoutDashboard,
-    title: "Online Portal",
-    description: "Online owner portal access"
-  },
-  {
-    icon: LineChart,
-    title: "Financial Reports",
-    description: "Monthly financial reporting"
-  }
-];
+const BenefitCard = ({ icon: Icon, title, desc, tag }) => (
+  <div className="bg-white border-2 border-navy p-6 hover:bg-navy transition-all duration-200 group relative overflow-hidden">
+    <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      <span className="font-mono text-[10px] text-teal border border-teal px-1">SPEC_{tag}</span>
+    </div>
+
+    <div className="mb-6">
+      <Icon className="w-8 h-8 text-navy group-hover:text-teal transition-colors" />
+    </div>
+
+    {/* Bottom Right Dot */}
+    <div className="absolute bottom-4 right-4 w-2 h-2 bg-navy group-hover:bg-teal transition-colors" />
+    <h3 className="text-lg font-black text-navy mb-2 uppercase tracking-tight group-hover:text-white transition-colors">{title}</h3>
+    <p className="text-sm font-mono text-ink-light group-hover:text-white/70 transition-colors">{desc}</p>
+  </div>
+);
 
 const BenefitsSection = () => {
-  return (
-    <section className="py-24 bg-white dark:bg-charcoal-gray">
-      <div className="container mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center max-w-3xl mx-auto mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            <span className="text-deep-teal dark:text-soft-teal">Why Choose </span>
-            <span className="text-soft-teal dark:text-light-teal">Property Partner?</span>
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300 text-lg">
-            We make property management simple and stress-free with our comprehensive service offering
-          </p>
-        </motion.div>
+  const benefits = [
+    { icon: Zap, title: "Transparent Pricing", desc: "No hidden fees - transparent 8.5% management fee", tag: "COST" },
+    { icon: Star, title: "Professional Media", desc: "High-fidelity photography assets included", tag: "VISUAL" },
+    { icon: FileText, title: "Detailed Reports", desc: "Granular property condition analytics", tag: "DATA" },
+    { icon: Shield, title: "Regular Inspections", desc: "Quarterly physical asset verification", tag: "SECURE" },
+    { icon: UserCheck, title: "24/7 Support", desc: "Round-the-clock maintenance coordination", tag: "LIVE" },
+    { icon: UserCheck, title: "Personal Manager", desc: "Dedicated account executive", tag: "HUMAN" },
+    { icon: Smartphone, title: "Online Portal", desc: "Real-time owner dashboard access", tag: "DIGITAL" },
+    { icon: PieChart, title: "Financial Reports", desc: "Monthly fiscal performance summaries", tag: "FISCAL" }
+  ];
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {benefits.map((benefit, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <Card className="h-full p-6 hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-charcoal-gray border border-gray-100 dark:border-gray-800">
-                <div className="flex flex-col items-center text-center space-y-4">
-                  <div className="p-3 rounded-full bg-gradient-to-br from-deep-teal/10 to-light-teal/10">
-                    <benefit.icon className="w-6 h-6 text-deep-teal dark:text-light-teal" />
-                  </div>
-                  <h3 className="font-semibold text-lg text-deep-teal dark:text-light-teal">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">
-                    {benefit.description}
-                  </p>
-                </div>
-              </Card>
-            </motion.div>
+  return (
+    <section className="py-24 bg-white border-t-2 border-navy">
+      <div className="container mx-auto px-6">
+
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
+          <div className="max-w-2xl">
+            <span className="text-xs font-mono font-bold text-teal uppercase tracking-widest mb-2 block">{'>'} SYSTEM_SPECS</span>
+            {/* STRICT TYPOGRAPHY IMPLEMENTATION */}
+            <h2 className="anti-h2 text-navy tracking-tighter leading-none">
+              FULL_STACK <br />
+              MANAGEMENT
+            </h2>
+          </div>
+          <div className="hidden md:block">
+            <div className="w-24 h-24 border-2 border-navy relative flex items-center justify-center">
+              <div className="absolute inset-0 border-2 border-teal translate-x-2 translate-y-2" />
+              <Zap className="w-8 h-8 text-navy" />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {benefits.map((item, i) => (
+            <BenefitCard key={i} {...item} />
           ))}
         </div>
+
       </div>
     </section>
   );

@@ -1,57 +1,52 @@
-@import '@fontsource/inter/300.css';
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
 @import '@fontsource/inter/600.css';
 @import '@fontsource/inter/700.css';
+@import '@fontsource/inter/900.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Anti-Ledger Theme Defaults */
+    --background: 210 40% 98%;
+    /* Wash */
+    --foreground: 222 47% 11%;
+    /* Ink */
+
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222 47% 11%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 187 100% 23%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 222 47% 11%;
+    /* Navy */
     --primary-foreground: 210 40% 98%;
-    --secondary: 187 34% 64%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 175 100% 41%;
+    /* Teal */
+    --secondary-foreground: 222 47% 11%;
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 187 34% 64%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 175 100% 41%;
+    --accent-foreground: 222 47% 11%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 187 100% 23%;
-    --radius: 0.75rem;
-  }
- 
-  .dark {
-    --background: 180 8% 18%;
-    --foreground: 210 40% 98%;
-    --card: 180 8% 18%;
-    --card-foreground: 210 40% 98%;
-    --popover: 180 8% 18%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 187 100% 37%;
-    --primary-foreground: 180 8% 18%;
-    --secondary: 217.2 32.6% 20%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 20%;
-    --muted-foreground: 215 20.2% 75%;
-    --accent: 187 100% 37%;
-    --accent-foreground: 180 8% 18%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 20%;
-    --input: 217.2 32.6% 20%;
-    --ring: 187 100% 37%;
+    --ring: 222 47% 11%;
+
+    --radius: 0px;
+    /* SHARP */
   }
 }
 
@@ -59,117 +54,56 @@
   * {
     @apply border-border;
   }
-  
+
+  html,
   body {
-    @apply bg-background text-foreground font-inter antialiased;
+    @apply bg-wash text-ink font-sans antialiased selection:bg-teal selection:text-navy overflow-x-hidden w-full max-w-[100vw];
+    background-image: radial-gradient(circle at 50% 0%, rgba(0, 210, 193, 0.05) 0%, transparent 50%);
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-inter font-semibold tracking-tight;
+  /* Strict Breakpoint Typography Defaults */
+  h1 {
+    @apply font-sans font-black tracking-tight text-navy;
   }
 
-  .dark {
-    @apply text-gray-100;
-  }
-
-  .dark p {
-    @apply text-gray-300;
-  }
-
-  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-    @apply text-white;
-  }
-
-  .dark .text-gray-600 {
-    @apply text-gray-300;
-  }
-
-  .dark .text-gray-700 {
-    @apply text-gray-200;
-  }
-
-  .dark .text-gray-800 {
-    @apply text-gray-100;
-  }
-
-  .dark .text-gray-900 {
-    @apply text-white;
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-sans font-black tracking-tight text-navy;
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-  
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-deep-teal to-light-teal;
+  .anti-card {
+    @apply bg-paper border-2 border-navy shadow-hard transition-all duration-200 hover:translate-x-1 hover:translate-y-1 hover:shadow-none;
   }
 
-  .bg-gradient-soft {
-    @apply bg-gradient-to-br from-cream to-soft-gray dark:from-charcoal dark:to-dark-charcoal;
+  .anti-btn {
+    @apply bg-navy text-white font-mono uppercase tracking-widest px-6 py-3 md:px-8 md:py-4 text-xs md:text-sm border-2 border-navy hover:bg-teal hover:text-navy hover:border-teal transition-colors duration-200;
   }
 
-  .bg-gradient-accent {
-    @apply bg-gradient-to-br from-deep-teal to-light-teal dark:from-light-teal dark:to-bright-teal;
+  .text-stroke {
+    -webkit-text-stroke: 1px #020817;
+    color: transparent;
   }
 
-  .shadow-card {
-    @apply shadow-soft hover:shadow-medium transition-shadow duration-300;
+  /* STRICT RESPONSIVE TYPOGRAPHY CLASSES - CHAMPION TUNED */
+  /* Remove aggressive wrap. Use specific mobile/desktop scaling suitable for 'Award Winning' look */
+  .anti-h1 {
+    @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.85] tracking-tight text-navy;
   }
 
-  .scrollbar-thin {
-    scrollbar-width: thin;
+  .anti-h2 {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tight text-navy;
   }
 
-  .scrollbar-thumb-deep-teal\/20 {
-    scrollbar-color: rgba(0, 109, 119, 0.2) transparent;
+  .anti-h3 {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight font-bold text-navy;
   }
 
-  .scrollbar-track-transparent {
-    scrollbar-track-color: transparent;
+  .anti-body {
+    @apply text-base sm:text-lg md:text-xl leading-relaxed text-ink;
   }
-}
-
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Reviews Widget Styles */
-.romw-reviews {
-  @apply font-inter !important;
-}
-
-.dark .romw-reviews {
-  @apply text-gray-200 !important;
-}
-
-.romw-reviews [class*="review-card"] {
-  @apply bg-white dark:bg-charcoal border border-gray-100 dark:border-gray-800 rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 !important;
-}
-
-.romw-reviews [class*="review-text"] {
-  @apply text-gray-600 dark:text-gray-300 !important;
-}
-
-.romw-reviews [class*="review-author"] {
-  @apply text-deep-teal dark:text-light-teal font-semibold !important;
-}
-
-.romw-reviews [class*="star-rating"] {
-  @apply text-deep-teal dark:text-light-teal !important;
-}
-
-/* Keen Slider Customization */
-.keen-slider {
-  @apply py-4;
-}
-
-.keen-slider__slide {
-  @apply transition-transform duration-300;
 }

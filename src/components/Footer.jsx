@@ -1,97 +1,100 @@
 import React from 'react';
-import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Facebook, Twitter, Linkedin, ArrowRight, Activity } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-charcoal-gray border-t border-gray-100 dark:border-gray-800">
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <div>
-            <h3 className="text-xl font-bold text-deep-teal dark:text-light-teal mb-4">
-              Property Partner
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Revolutionizing property management with cutting-edge solutions.
+    <footer className="bg-navy text-white pt-24 pb-12 border-t-8 border-teal relative overflow-hidden">
+      {/* Background Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+
+      <div className="container mx-auto px-6 relative z-10">
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
+
+          <div className="col-span-1 md:col-span-1">
+            <Link to="/" className="inline-block mb-8 group">
+              <img src="/logo.png" alt="Property Partner" className="h-16 w-auto object-contain brightness-0 invert group-hover:opacity-80 transition-opacity" />
+            </Link>
+            <p className="font-mono text-sm text-white/60 mb-8 leading-relaxed max-w-xs">
+              Next-generation property management infrastructure.
+              <br />Automating assets since 2026.
             </p>
-            <div className="flex space-x-4">
-              <SocialLink icon={Facebook} href="#" />
-              <SocialLink icon={Twitter} href="#" />
-              <SocialLink icon={Linkedin} href="#" />
+            <div className="flex gap-4">
+              <a href="#" className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-teal hover:text-navy hover:border-teal transition-all"><Facebook className="w-5 h-5" /></a>
+              <a href="#" className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-teal hover:text-navy hover:border-teal transition-all"><Twitter className="w-5 h-5" /></a>
+              <a href="#" className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-teal hover:text-navy hover:border-teal transition-all"><Linkedin className="w-5 h-5" /></a>
             </div>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Links</h4>
-            <ul className="space-y-3">
-              <FooterLink href="#" text="Home" />
-              <FooterLink href="#" text="Services" />
-              <FooterLink href="#" text="About Us" />
-              <FooterLink href="#" text="Contact" />
+            <h4 className="font-black text-lg uppercase tracking-tight text-white mb-8 flex items-center gap-2">
+              <span className="w-2 h-2 bg-teal" /> Navigation
+            </h4>
+            <ul className="space-y-4 font-mono text-sm text-white/60">
+              <li><Link to="/" className="hover:text-teal hover:pl-2 transition-all flex items-center gap-2">Home</Link></li>
+              <li><Link to="/services" className="hover:text-teal hover:pl-2 transition-all flex items-center gap-2">Services</Link></li>
+              <li><Link to="/about" className="hover:text-teal hover:pl-2 transition-all flex items-center gap-2">Our Story</Link></li>
+              <li><Link to="/contact" className="hover:text-teal hover:pl-2 transition-all flex items-center gap-2">Contact</Link></li>
+              <li><Link to="/login" className="text-teal font-bold hover:underline decoration-2 underline-offset-4">Portal Login</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Contact Us</h4>
-            <ul className="space-y-3">
-              <ContactItem icon={MapPin} text="123 Property Lane, Real Estate City, 12345" />
-              <ContactItem icon={Phone} text="(123) 456-7890" />
-              <ContactItem icon={Mail} text="info@propertypartner.com" />
+            <h4 className="font-black text-lg uppercase tracking-tight text-white mb-8 flex items-center gap-2">
+              <span className="w-2 h-2 bg-teal" /> Legal / Info
+            </h4>
+            <ul className="space-y-4 font-mono text-sm text-white/60">
+              <li>123 Property Lane<br />Real Estate City, 12345</li>
+              <li>(123) 456-7890</li>
+              <li className="text-teal">info@propertypartner.com</li>
+              <li className="pt-4 border-t border-white/10 mt-4 text-xs"><Link to="/privacy" className="hover:text-teal transition-colors">Privacy Policy</Link></li>
+              <li className="text-xs"><Link to="/terms" className="hover:text-teal transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Newsletter</h4>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Subscribe to our newsletter for updates and insights.
+            <h4 className="font-black text-lg uppercase tracking-tight text-white mb-8 flex items-center gap-2">
+              <span className="w-2 h-2 bg-teal" /> System Status
+            </h4>
+            <div className="bg-white/5 border border-white/10 p-6 mb-6">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-mono text-xs uppercase text-teal">Operational</span>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              </div>
+              <div className="w-full bg-white/10 h-1 mt-2">
+                <div className="bg-teal h-full w-[98%]" />
+              </div>
+              <div className="mt-2 font-mono text-[10px] text-white/40 text-right">UPTIME: 99.99%</div>
+            </div>
+
+            <p className="font-sans text-sm text-white/60 mb-4">
+              Subscribe for system updates.
             </p>
-            <form className="space-y-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-deep-teal dark:focus:border-light-teal outline-none transition-colors"
-              />
-              <button className="w-full px-4 py-2 bg-deep-teal hover:bg-light-teal text-white dark:bg-light-teal dark:text-deep-teal dark:hover:bg-deep-teal dark:hover:text-white rounded-lg transition-colors">
-                Subscribe
+            <div className="flex">
+              <input type="email" placeholder="EMAIL_ADDRESS" className="bg-transparent border border-white/20 text-white px-4 py-3 w-full font-mono text-xs placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors" />
+              <button className="bg-teal text-navy px-4 hover:bg-white transition-colors border border-teal">
+                <ArrowRight className="w-4 h-4" />
               </button>
-            </form>
+            </div>
+          </div>
+
+        </div>
+
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="font-mono text-[10px] uppercase tracking-widest text-white/40">
+            REF: #FTR-2025 // SYSTEM V2.5
+          </div>
+          <div className="font-mono text-[10px] uppercase tracking-widest text-white/40 flex items-center gap-2">
+            <Activity className="w-3 h-3 text-teal" />
+            © 2025 PROPERTY PARTNER. ALL RIGHTS RESERVED.
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-100 dark:border-gray-800 text-center">
-          <p className="text-gray-600 dark:text-gray-300">
-            © {new Date().getFullYear()} Property Partner. All rights reserved.
-          </p>
-        </div>
       </div>
     </footer>
   );
 };
-
-const SocialLink = ({ icon: Icon, href }) => (
-  <a
-    href={href}
-    className="w-10 h-10 rounded-lg bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-deep-teal hover:text-white dark:hover:bg-light-teal dark:hover:text-deep-teal transition-colors"
-  >
-    <Icon className="w-5 h-5" />
-  </a>
-);
-
-const FooterLink = ({ href, text }) => (
-  <li>
-    <a
-      href={href}
-      className="text-gray-600 dark:text-gray-300 hover:text-deep-teal dark:hover:text-light-teal transition-colors"
-    >
-      {text}
-    </a>
-  </li>
-);
-
-const ContactItem = ({ icon: Icon, text }) => (
-  <li className="flex items-start space-x-3">
-    <Icon className="w-5 h-5 text-deep-teal dark:text-light-teal flex-shrink-0 mt-1" />
-    <span className="text-gray-600 dark:text-gray-300">{text}</span>
-  </li>
-);
 
 export default Footer;
