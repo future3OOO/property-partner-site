@@ -29,7 +29,7 @@ const TradeMeListing = ({ listing }) => {
     };
 
     return (
-        <div className="group relative overflow-hidden bg-navy border-2 border-navy aspect-[4/5] md:aspect-square">
+        <div className="group relative overflow-hidden bg-navy border-2 border-navy aspect-[3/2]">
             {/* Main Image */}
             <a 
                 href={listing.trademe_url} 
@@ -67,7 +67,7 @@ const TradeMeListing = ({ listing }) => {
 
             {/* Photo Dots Selector */}
             {photos.length > 1 && (
-                <div className="absolute bottom-24 left-0 right-0 flex justify-center gap-2 z-10">
+                <div className="absolute bottom-20 left-0 right-0 flex justify-center gap-2 z-10">
                     {photos.map((_, index) => (
                         <button
                             key={index}
