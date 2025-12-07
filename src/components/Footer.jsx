@@ -80,8 +80,8 @@ const Footer = () => {
               <span className="w-2 h-2 bg-teal" /> Legal / Info
             </h4>
             <ul className="space-y-4 font-mono text-sm text-white/60">
-              <li>123 Property Lane<br />Real Estate City, 12345</li>
-              <li>(123) 456-7890</li>
+              <li>Christchurch, New Zealand</li>
+              <li>03 385 4888</li>
               <li className="text-teal">hello@propertypartner.co.nz</li>
               <li className="pt-4 border-t border-white/10 mt-4 text-xs"><Link to="/privacy" className="hover:text-teal transition-colors">Privacy Policy</Link></li>
               <li className="text-xs"><Link to="/terms" className="hover:text-teal transition-colors">Terms of Service</Link></li>
