@@ -178,7 +178,7 @@ def scrape_listings():
                 # Download full-size images (convert thumbnail URLs to /full/)
                 local_photos = []
                 for photo_id in photo_ids[:MAX_PHOTOS]:
-                    full_url = f"https://trademe.tmcdn.co.nz/photoserver/full/{photo_id}.jpg"
+                    full_url = f"https://trademe.tmcdn.co.nz/photoserver/plus/{photo_id}.jpg"
                     photo_path = listing_dir / f"photo_{len(local_photos)+1}.jpg"
                     
                     if download_image(full_url, photo_path):
