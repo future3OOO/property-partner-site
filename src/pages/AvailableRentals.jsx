@@ -67,7 +67,7 @@ const TradeMeListing = ({ listing }) => {
 
             {/* Photo Dots Selector */}
             {photos.length > 1 && (
-                <div className="absolute bottom-28 left-0 right-0 flex justify-center gap-2 z-30 pointer-events-auto">
+                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-30 pointer-events-auto">
                     {photos.map((_, index) => (
                         <button
                             key={index}
