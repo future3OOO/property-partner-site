@@ -14,8 +14,12 @@ from PIL import Image
 from io import BytesIO
 
 TRADEME_OFFICE_URL = "https://www.trademe.co.nz/a/property/office/5713372"
-# OUTPUT_DIR = Path("/var/www/propertypartner/listings")
-OUTPUT_DIR = Path(__file__).resolve().parent.parent / "public" / "listings"
+# Determine environment output path
+PROD_DIR = Path("/var/www/propertypartner/listings")
+if PROD_DIR.exists():
+    OUTPUT_DIR = PROD_DIR
+else:
+    OUTPUT_DIR = Path(__file__).resolve().parent.parent / "public" / "listings"
 MAX_LISTINGS = 6
 MAX_PHOTOS = 5
 
