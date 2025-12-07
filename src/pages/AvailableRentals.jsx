@@ -1,10 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ExternalLink, Camera, ArrowRight, Grid, MapPin } from 'lucide-react';
+import { ExternalLink, Camera, ArrowRight, Grid, MapPin, Home, Bed, Loader2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+// Trade Me Listing Card Component
+const TradeMeListing = ({ listing }) => (
+    <a 
+        href={listing.trademe_url} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="group relative overflow-hidden bg-navy border-2 border-navy aspect-[4/5] md:aspect-square block"
+    >
+        <img
+            src={listing.photos[0]}
+            alt={listing.title}
+            className="object-cover w-full h-full opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+        <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+            <span className="font-mono text-[10px] text-teal uppercase tracking-widest bg-navy/80 px-2 py-1 inline-block mb-3 border border-teal/20 backdrop-blur-sm">
+                {listing.price} {listing.bedrooms > 0 && `// ${listing.bedrooms} Bed`}
+            </span>
+            <h3 className="text-lg font-black text-white uppercase leading-tight mb-1 line-clamp-2">{listing.title}</h3>
+            <p className="font-mono text-xs text-white/60 flex items-center gap-2">
+                <MapPin className="w-3 h-3" /> {listing.address}
+            </p>
+            <div className="mt-3 flex items-center gap-2 text-teal font-mono text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                <span>View on Trade Me</span>
+                <ExternalLink className="w-3 h-3" />
+            </div>
+        </div>
+    </a>
+);
+
+// Placeholder Gallery Item (for fallback)
 const GalleryItem = ({ image, title, location, tag }) => (
     <div className="group relative overflow-hidden bg-navy border-2 border-navy aspect-[4/5] md:aspect-square">
         <img
@@ -28,24 +60,43 @@ const GalleryItem = ({ image, title, location, tag }) => (
 
 const AvailableRentals = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const [listings, setListings] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        fetch('/listings/listings.json')
+            .then(res => {
+                if (!res.ok) throw new Error('Failed to load listings');
+                return res.json();
+            })
+            .then(data => {
+                setListings(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error('Error loading listings:', err);
+                setError(err.message);
+                setLoading(false);
+            });
+    }, []);
 
     return (
         <div className="flex flex-col min-h-screen bg-wash">
-      <Helmet>
-        <title>Rentals Available Christchurch | Property Partner</title>
-        <meta name="description" content="Browse available rental properties in Christchurch managed by Property Partner. Quality homes across Canterbury with professional property management." />
-        <meta name="keywords" content="rentals Christchurch, houses for rent Canterbury, rental properties NZ, available rentals Christchurch" />
-        <link rel="canonical" href="https://propertypartner.co.nz/available-rentals" />
-        <meta property="og:title" content="Rentals Available Christchurch | Property Partner" />
-        <meta property="og:description" content="Browse available rental properties in Christchurch managed by Property Partner. Quality homes across Canterbury with professional property management." />
-        <meta property="og:url" content="https://propertypartner.co.nz/available-rentals" />
-      </Helmet>
+            <Helmet>
+                <title>Rentals Available Christchurch | Property Partner</title>
+                <meta name="description" content="Browse available rental properties in Christchurch managed by Property Partner. Quality homes across Canterbury with professional property management." />
+                <meta name="keywords" content="rentals Christchurch, houses for rent Canterbury, rental properties NZ, available rentals Christchurch" />
+                <link rel="canonical" href="https://propertypartner.co.nz/available-rentals" />
+                <meta property="og:title" content="Rentals Available Christchurch | Property Partner" />
+                <meta property="og:description" content="Browse available rental properties in Christchurch managed by Property Partner. Quality homes across Canterbury with professional property management." />
+                <meta property="og:url" content="https://propertypartner.co.nz/available-rentals" />
+            </Helmet>
             <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
 
             <main className="flex-grow pt-24">
                 {/* HERO SECTION */}
                 <section className="bg-navy text-white py-16 md:py-24 border-b-8 border-teal relative overflow-hidden">
-                    {/* Background Grid */}
                     <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
                     <div className="container mx-auto px-6 relative z-10">
                         <div className="max-w-4xl">
@@ -97,7 +148,6 @@ const AvailableRentals = () => {
                                     </Button>
                                 </div>
                             </div>
-                            {/* Decorative Elements */}
                             <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
                                 <Grid className="w-48 h-48 md:w-64 md:h-64" />
                             </div>
@@ -105,65 +155,75 @@ const AvailableRentals = () => {
                     </div>
                 </section>
 
-                {/* GALLERY SECTION */}
+                {/* CURRENT LISTINGS SECTION */}
                 <section className="py-16 md:py-24 bg-wash">
                     <div className="container mx-auto px-6">
                         <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-8">
                             <div>
-                                <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-4 block">&gt; VISUAL_ARCHIVE</span>
-                                <h2 className="text-3xl md:text-4xl font-black text-navy tracking-tighter uppercase">Presentation Standard</h2>
+                                <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-4 block">&gt; LIVE_LISTINGS</span>
+                                <h2 className="text-3xl md:text-4xl font-black text-navy tracking-tighter uppercase">Current Properties</h2>
                             </div>
                             <div className="font-mono text-xs text-navy/60 max-w-md text-left md:text-right border-l-4 md:border-l-0 md:border-r-4 border-teal pl-4 md:pl-0 md:pr-4">
-                                We pride ourselves on professional photography and immaculate presentation for every listing.
+                                Properties automatically synced from our Trade Me listings. Updated daily.
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                            <GalleryItem
-                                image="https://images.unsplash.com/photo-1600596542815-e328701102b9?auto=format&fit=crop&q=80"
-                                title="The Glass House"
-                                location="Mount Victoria, Wellington"
-                                tag="Leased // Premium"
-                            />
-                            <GalleryItem
-                                image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80"
-                                title="Orakei Penthouse"
-                                location="Orakei, Auckland"
-                                tag="Leased // Luxury"
-                            />
-                            <GalleryItem
-                                image="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80"
-                                title="Urban Loft"
-                                location="Te Aro, Wellington"
-                                tag="Available Now"
-                            />
-                            <GalleryItem
-                                image="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
-                                title="Seaside Villa"
-                                location="Sumner, Christchurch"
-                                tag="Leased"
-                            />
-                            <GalleryItem
-                                image="https://images.unsplash.com/photo-1512918760383-eda2723ad6e1?auto=format&fit=crop&q=80"
-                                title="City Point Apartments"
-                                location="Auckland CBD"
-                                tag="Portfolio Highlight"
-                            />
-                            <div className="bg-navy p-8 flex flex-col justify-center items-center text-center border-2 border-navy group cursor-pointer hover:bg-teal transition-colors aspect-[4/5] md:aspect-square">
-                                <Camera className="w-12 h-12 text-teal mb-6 group-hover:text-navy transition-colors" />
-                                <h3 className="text-2xl font-black text-white mb-2 uppercase group-hover:text-navy">List With Us</h3>
-                                <p className="font-mono text-xs text-white/60 mb-8 group-hover:text-navy/70">
-                                    Experience our premium marketing package for your investment property.
+                        {loading ? (
+                            <div className="flex items-center justify-center py-20">
+                                <Loader2 className="w-8 h-8 text-teal animate-spin" />
+                                <span className="ml-4 font-mono text-navy/60">Loading listings...</span>
+                            </div>
+                        ) : listings.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                                {listings.map((listing) => (
+                                    <TradeMeListing key={listing.id} listing={listing} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-16 bg-white border-4 border-navy/10">
+                                <Home className="w-16 h-16 text-navy/20 mx-auto mb-6" />
+                                <h3 className="text-2xl font-black text-navy uppercase mb-4">No Current Listings</h3>
+                                <p className="font-mono text-sm text-navy/60 max-w-md mx-auto mb-8">
+                                    All properties are currently tenanted. Check back soon or visit our Trade Me page for the latest updates.
                                 </p>
-                                <Button className="bg-transparent border-2 border-white/20 text-white font-mono text-xs uppercase hover:bg-white hover:text-navy group-hover:border-navy group-hover:text-navy">
-                                    Owner Services
+                                <Button
+                                    asChild
+                                    className="h-14 px-8 bg-navy text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none hover:bg-teal hover:text-navy border-2 border-navy transition-all"
+                                >
+                                    <a href="https://www.trademe.co.nz/a/property/office/5713372" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
+                                        Check Trade Me <ExternalLink className="w-5 h-5" />
+                                    </a>
                                 </Button>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </section>
 
+                {/* CTA SECTION */}
+                <section className="py-16 md:py-24 bg-navy text-white relative overflow-hidden">
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:6rem_6rem]" />
+                    <div className="container mx-auto px-6 relative z-10">
+                        <div className="max-w-4xl mx-auto text-center">
+                            <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-4 block">&gt; LANDLORDS</span>
+                            <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tighter uppercase">
+                                Got a Property to Rent?
+                            </h2>
+                            <p className="text-white/60 text-lg mb-10 max-w-2xl mx-auto">
+                                We provide professional property management services for landlords across Christchurch. Simple 8% + GST fee, no hidden costs.
+                            </p>
+                            <Button
+                                asChild
+                                className="h-16 px-12 bg-teal text-navy font-mono text-sm font-bold uppercase tracking-widest rounded-none hover:bg-white border-2 border-teal transition-all"
+                            >
+                                <a href="/landlord-services" className="flex items-center gap-4">
+                                    Landlord Services <ArrowRight className="w-5 h-5" />
+                                </a>
+                            </Button>
+                        </div>
+                    </div>
+                </section>
             </main>
+
             <Footer />
         </div>
     );
