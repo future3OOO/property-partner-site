@@ -1,9 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Linkedin, ArrowRight, Activity } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+import { Facebook, Twitter, Linkedin, ArrowRight, Activity, Loader2, Check } from 'lucide-react';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    setIsSubmitting(true);
+    setError(null);
+    
+    try {
+      const form = new FormData();
+      form.append('email', email);
+      
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        body: form
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to subscribe');
+      }
+      
+      setIsSubscribed(true);
+      setEmail('');
+    } catch (err) {
+      setError('Failed to subscribe');
+      console.error('Newsletter error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <footer className="bg-navy text-white pt-24 pb-12 border-t-8 border-teal relative overflow-hidden">
       {/* Background Grid */}
@@ -48,7 +82,7 @@ const Footer = () => {
             <ul className="space-y-4 font-mono text-sm text-white/60">
               <li>123 Property Lane<br />Real Estate City, 12345</li>
               <li>(123) 456-7890</li>
-              <li className="text-teal">info@propertypartner.com</li>
+              <li className="text-teal">hello@propertypartner.co.nz</li>
               <li className="pt-4 border-t border-white/10 mt-4 text-xs"><Link to="/privacy" className="hover:text-teal transition-colors">Privacy Policy</Link></li>
               <li className="text-xs"><Link to="/terms" className="hover:text-teal transition-colors">Terms of Service</Link></li>
             </ul>
@@ -72,12 +106,36 @@ const Footer = () => {
             <p className="font-sans text-sm text-white/60 mb-4">
               Subscribe for system updates.
             </p>
-            <div className="flex">
-              <input type="email" placeholder="EMAIL_ADDRESS" className="bg-transparent border border-white/20 text-white px-4 py-3 w-full font-mono text-xs placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors" />
-              <button className="bg-teal text-navy px-4 hover:bg-white transition-colors border border-teal">
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
+            
+            {isSubscribed ? (
+              <div className="flex items-center gap-2 text-teal font-mono text-sm">
+                <Check className="w-4 h-4" />
+                <span>Subscribed!</span>
+              </div>
+            ) : (
+              <form onSubmit={handleNewsletterSubmit} className="flex">
+                <input 
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="EMAIL_ADDRESS" 
+                  required
+                  className="bg-transparent border border-white/20 text-white px-4 py-3 w-full font-mono text-xs placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors" 
+                />
+                <button 
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-teal text-navy px-4 hover:bg-white transition-colors border border-teal disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <ArrowRight className="w-4 h-4" />
+                  )}
+                </button>
+              </form>
+            )}
+            {error && <p className="text-red-400 text-xs mt-2 font-mono">{error}</p>}
           </div>
 
         </div>

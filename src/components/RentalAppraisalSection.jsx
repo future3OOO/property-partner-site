@@ -2,18 +2,64 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Loader2 } from 'lucide-react';
 
 const RentalAppraisalSection = () => {
     const [step, setStep] = useState(1);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [error, setError] = useState(null);
+    
+    // Form data state
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        bedrooms: '',
+        bathrooms: ''
+    });
 
-    const handleSubmit = (e) => {
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
+        
         if (step === 1) {
             setStep(2);
-        } else {
+            return;
+        }
+        
+        // Submit to API
+        setIsSubmitting(true);
+        try {
+            const form = new FormData();
+            form.append('name', formData.name);
+            form.append('email', formData.email);
+            form.append('phone', formData.phone);
+            form.append('address', formData.address);
+            form.append('bedrooms', formData.bedrooms);
+            form.append('bathrooms', formData.bathrooms);
+            
+            const response = await fetch('/api/appraisal', {
+                method: 'POST',
+                body: form
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to submit');
+            }
+            
             setIsSubmitted(true);
+        } catch (err) {
+            setError('Something went wrong. Please try again.');
+            console.error('Form submission error:', err);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -73,35 +119,87 @@ const RentalAppraisalSection = () => {
                                 </h3>
                             </div>
 
+                            {error && (
+                                <div className="p-4 bg-red-100 border-2 border-red-500 text-red-700 font-mono text-sm">
+                                    {error}
+                                </div>
+                            )}
+
                             {step === 1 ? (
                                 <div className="space-y-4">
                                     <div className="space-y-2">
                                         <Label className="text-xs font-mono font-bold uppercase text-navy">Full_Name</Label>
-                                        <Input className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" placeholder="John Doe" required />
+                                        <Input 
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleInputChange}
+                                            className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" 
+                                            placeholder="John Doe" 
+                                            required 
+                                        />
                                     </div>
                                     <div className="space-y-2">
                                         <Label className="text-xs font-mono font-bold uppercase text-navy">Email_Address</Label>
-                                        <Input className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" type="email" placeholder="john@example.com" required />
+                                        <Input 
+                                            name="email"
+                                            type="email"
+                                            value={formData.email}
+                                            onChange={handleInputChange}
+                                            className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" 
+                                            placeholder="john@example.com" 
+                                            required 
+                                        />
                                     </div>
                                     <div className="space-y-2">
                                         <Label className="text-xs font-mono font-bold uppercase text-navy">Phone_Number</Label>
-                                        <Input className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" type="tel" placeholder="(021) 123-4567" required />
+                                        <Input 
+                                            name="phone"
+                                            type="tel"
+                                            value={formData.phone}
+                                            onChange={handleInputChange}
+                                            className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" 
+                                            placeholder="(021) 123-4567" 
+                                            required 
+                                        />
                                     </div>
                                 </div>
                             ) : (
                                 <div className="space-y-4">
                                     <div className="space-y-2">
                                         <Label className="text-xs font-mono font-bold uppercase text-navy">Property_Address</Label>
-                                        <Input className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" placeholder="123 Example St" required />
+                                        <Input 
+                                            name="address"
+                                            value={formData.address}
+                                            onChange={handleInputChange}
+                                            className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" 
+                                            placeholder="123 Example St" 
+                                            required 
+                                        />
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <Label className="text-xs font-mono font-bold uppercase text-navy">Bedrooms</Label>
-                                            <Input className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" type="number" min="0" required />
+                                            <Input 
+                                                name="bedrooms"
+                                                type="number"
+                                                min="0"
+                                                value={formData.bedrooms}
+                                                onChange={handleInputChange}
+                                                className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" 
+                                                required 
+                                            />
                                         </div>
                                         <div className="space-y-2">
                                             <Label className="text-xs font-mono font-bold uppercase text-navy">Bathrooms</Label>
-                                            <Input className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" type="number" min="0" required />
+                                            <Input 
+                                                name="bathrooms"
+                                                type="number"
+                                                min="0"
+                                                value={formData.bathrooms}
+                                                onChange={handleInputChange}
+                                                className="h-12 rounded-none border-2 border-navy bg-wash focus:ring-0 focus:border-teal transition-colors font-mono text-sm" 
+                                                required 
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -113,8 +211,16 @@ const RentalAppraisalSection = () => {
                                         Back
                                     </Button>
                                 )}
-                                <Button type="submit" className="flex-1 h-14 bg-navy text-white font-mono font-bold uppercase tracking-widest rounded-none border-2 border-navy hover:bg-teal hover:text-navy hover:border-teal transition-colors shadow-hard hover:shadow-none hover:translate-x-1 hover:translate-y-1">
-                                    {step === 1 ? 'Next_Step >' : 'Execute_Appraisal'}
+                                <Button 
+                                    type="submit" 
+                                    disabled={isSubmitting}
+                                    className="flex-1 h-14 bg-navy text-white font-mono font-bold uppercase tracking-widest rounded-none border-2 border-navy hover:bg-teal hover:text-navy hover:border-teal transition-colors shadow-hard hover:shadow-none hover:translate-x-1 hover:translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {isSubmitting ? (
+                                        <Loader2 className="w-5 h-5 animate-spin" />
+                                    ) : (
+                                        step === 1 ? 'Next_Step >' : 'Execute_Appraisal'
+                                    )}
                                 </Button>
                             </div>
                         </form>
