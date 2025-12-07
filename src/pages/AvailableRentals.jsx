@@ -1,62 +1,119 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ExternalLink, Camera, ArrowRight, Grid, MapPin, Home, Bed, Loader2 } from 'lucide-react';
+import { ExternalLink, Camera, ArrowRight, Grid, MapPin, Home, Bed, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-// Trade Me Listing Card Component
-const TradeMeListing = ({ listing }) => (
-    <a 
-        href={listing.trademe_url} 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="group relative overflow-hidden bg-navy border-2 border-navy aspect-[4/5] md:aspect-square block"
-    >
-        <img
-            src={listing.photos[0]}
-            alt={listing.title}
-            className="object-cover w-full h-full opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent opacity-100 transition-opacity duration-300 pointer-events-none" />
+// Trade Me Listing Card with Photo Carousel
+const TradeMeListing = ({ listing }) => {
+    const [currentPhoto, setCurrentPhoto] = useState(0);
+    const photos = listing.photos || [];
 
-        <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-            <span className="font-mono text-[10px] text-teal uppercase tracking-widest bg-navy/80 px-2 py-1 inline-block mb-3 border border-teal/20 backdrop-blur-sm">
-                {listing.price} {listing.bedrooms > 0 && `// ${listing.bedrooms} Bed`}
-            </span>
-            <h3 className="text-lg font-black text-white uppercase leading-tight mb-1 line-clamp-2">{listing.title}</h3>
-            <p className="font-mono text-xs text-white/60 flex items-center gap-2">
-                <MapPin className="w-3 h-3" /> {listing.address}
-            </p>
-            <div className="mt-3 flex items-center gap-2 text-teal font-mono text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                <span>View on Trade Me</span>
-                <ExternalLink className="w-3 h-3" />
-            </div>
+    const nextPhoto = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setCurrentPhoto((prev) => (prev + 1) % photos.length);
+    };
+
+    const prevPhoto = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setCurrentPhoto((prev) => (prev - 1 + photos.length) % photos.length);
+    };
+
+    const selectPhoto = (e, index) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setCurrentPhoto(index);
+    };
+
+    return (
+        <div className="group relative overflow-hidden bg-navy border-2 border-navy aspect-[4/5] md:aspect-square">
+            {/* Main Image */}
+            <a 
+                href={listing.trademe_url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block w-full h-full"
+            >
+                <img
+                    src={photos[currentPhoto] || '/placeholder.svg'}
+                    alt={`${listing.title} - Photo ${currentPhoto + 1}`}
+                    className="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-all duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent opacity-100 pointer-events-none" />
+            </a>
+
+            {/* Photo Navigation Arrows */}
+            {photos.length > 1 && (
+                <>
+                    <button
+                        onClick={prevPhoto}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-navy/80 hover:bg-teal text-white hover:text-navy flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
+                        aria-label="Previous photo"
+                    >
+                        <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                        onClick={nextPhoto}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-navy/80 hover:bg-teal text-white hover:text-navy flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
+                        aria-label="Next photo"
+                    >
+                        <ChevronRight className="w-5 h-5" />
+                    </button>
+                </>
+            )}
+
+            {/* Photo Dots Selector */}
+            {photos.length > 1 && (
+                <div className="absolute bottom-24 left-0 right-0 flex justify-center gap-2 z-10">
+                    {photos.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={(e) => selectPhoto(e, index)}
+                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                index === currentPhoto 
+                                    ? 'bg-teal w-6' 
+                                    : 'bg-white/50 hover:bg-white/80'
+                            }`}
+                            aria-label={`View photo ${index + 1}`}
+                        />
+                    ))}
+                </div>
+            )}
+
+            {/* Photo Counter */}
+            {photos.length > 1 && (
+                <div className="absolute top-4 right-4 bg-navy/80 backdrop-blur-sm px-2 py-1 z-10">
+                    <span className="font-mono text-[10px] text-white">
+                        {currentPhoto + 1} / {photos.length}
+                    </span>
+                </div>
+            )}
+
+            {/* Content Overlay */}
+            <a 
+                href={listing.trademe_url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="absolute bottom-0 left-0 right-0 p-6 z-10"
+            >
+                <span className="font-mono text-[10px] text-teal uppercase tracking-widest bg-navy/80 px-2 py-1 inline-block mb-3 border border-teal/20 backdrop-blur-sm">
+                    {listing.price} {listing.bedrooms > 0 && `// ${listing.bedrooms} Bed`}
+                </span>
+                <h3 className="text-lg font-black text-white uppercase leading-tight mb-1 line-clamp-2">{listing.title}</h3>
+                <p className="font-mono text-xs text-white/60 flex items-center gap-2">
+                    <MapPin className="w-3 h-3" /> {listing.address}
+                </p>
+                <div className="mt-3 flex items-center gap-2 text-teal font-mono text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span>View on Trade Me</span>
+                    <ExternalLink className="w-3 h-3" />
+                </div>
+            </a>
         </div>
-    </a>
-);
-
-// Placeholder Gallery Item (for fallback)
-const GalleryItem = ({ image, title, location, tag }) => (
-    <div className="group relative overflow-hidden bg-navy border-2 border-navy aspect-[4/5] md:aspect-square">
-        <img
-            src={image}
-            alt={title}
-            className="object-cover w-full h-full opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out grayscale group-hover:grayscale-0"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-        <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-            <span className="font-mono text-[10px] text-teal uppercase tracking-widest bg-navy/80 px-2 py-1 inline-block mb-3 border border-teal/20 backdrop-blur-sm">
-                {tag}
-            </span>
-            <h3 className="text-xl font-black text-white uppercase leading-none mb-1">{title}</h3>
-            <p className="font-mono text-xs text-white/60 flex items-center gap-2">
-                <MapPin className="w-3 h-3" /> {location}
-            </p>
-        </div>
-    </div>
-);
+    );
+};
 
 const AvailableRentals = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
@@ -89,7 +146,7 @@ const AvailableRentals = () => {
                 <meta name="keywords" content="rentals Christchurch, houses for rent Canterbury, rental properties NZ, available rentals Christchurch" />
                 <link rel="canonical" href="https://propertypartner.co.nz/available-rentals" />
                 <meta property="og:title" content="Rentals Available Christchurch | Property Partner" />
-                <meta property="og:description" content="Browse available rental properties in Christchurch managed by Property Partner. Quality homes across Canterbury with professional property management." />
+                <meta property="og:description" content="Browse available rental properties in Christchurch managed by Property Partner." />
                 <meta property="og:url" content="https://propertypartner.co.nz/available-rentals" />
             </Helmet>
             <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
@@ -135,7 +192,6 @@ const AvailableRentals = () => {
                                             Anyone who attends a viewing will be automatically sent an application link. You can also view our <a href="/rental-application" className="text-teal underline decoration-teal underline-offset-4 hover:text-white transition-colors">standard application form here</a>.
                                         </p>
                                     </div>
-
                                 </div>
                                 <div className="shrink-0 w-full lg:w-auto">
                                     <Button
@@ -164,7 +220,7 @@ const AvailableRentals = () => {
                                 <h2 className="text-3xl md:text-4xl font-black text-navy tracking-tighter uppercase">Current Properties</h2>
                             </div>
                             <div className="font-mono text-xs text-navy/60 max-w-md text-left md:text-right border-l-4 md:border-l-0 md:border-r-4 border-teal pl-4 md:pl-0 md:pr-4">
-                                Properties automatically synced from our Trade Me listings. Updated daily.
+                                Properties automatically synced from our Trade Me listings. Updated daily. Use arrows or dots to browse photos.
                             </div>
                         </div>
 
