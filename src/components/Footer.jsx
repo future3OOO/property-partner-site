@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Linkedin, ArrowRight, Activity, Loader2, Check } from 'lucide-react';
+import { Facebook, Instagram, ArrowRight, Activity, Loader2, Check } from 'lucide-react';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -11,23 +11,23 @@ const Footer = () => {
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
     if (!email) return;
-    
+
     setIsSubmitting(true);
     setError(null);
-    
+
     try {
       const form = new FormData();
       form.append('email', email);
-      
+
       const response = await fetch('/api/newsletter', {
         method: 'POST',
         body: form
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to subscribe');
       }
-      
+
       setIsSubscribed(true);
       setEmail('');
     } catch (err) {
@@ -56,9 +56,8 @@ const Footer = () => {
               <br />Automating assets since 2026.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-teal hover:text-navy hover:border-teal transition-all"><Facebook className="w-5 h-5" /></a>
-              <a href="#" className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-teal hover:text-navy hover:border-teal transition-all"><Twitter className="w-5 h-5" /></a>
-              <a href="#" className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-teal hover:text-navy hover:border-teal transition-all"><Linkedin className="w-5 h-5" /></a>
+              <a href="https://www.facebook.com/propertypartner.co.nz" target="_blank" rel="noopener noreferrer" className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-teal hover:text-navy hover:border-teal transition-all"><Facebook className="w-5 h-5" /></a>
+              <a href="https://www.instagram.com/propertypartner_/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-teal hover:text-navy hover:border-teal transition-all"><Instagram className="w-5 h-5" /></a>
             </div>
           </div>
 
@@ -106,7 +105,7 @@ const Footer = () => {
             <p className="font-sans text-sm text-white/60 mb-4">
               Subscribe for system updates.
             </p>
-            
+
             {isSubscribed ? (
               <div className="flex items-center gap-2 text-teal font-mono text-sm">
                 <Check className="w-4 h-4" />
@@ -114,15 +113,15 @@ const Footer = () => {
               </div>
             ) : (
               <form onSubmit={handleNewsletterSubmit} className="flex">
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="EMAIL_ADDRESS" 
+                  placeholder="EMAIL_ADDRESS"
                   required
-                  className="bg-transparent border border-white/20 text-white px-4 py-3 w-full font-mono text-xs placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors" 
+                  className="bg-transparent border border-white/20 text-white px-4 py-3 w-full font-mono text-xs placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors"
                 />
-                <button 
+                <button
                   type="submit"
                   disabled={isSubmitting}
                   className="bg-teal text-navy px-4 hover:bg-white transition-colors border border-teal disabled:opacity-50"

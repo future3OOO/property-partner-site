@@ -68,15 +68,15 @@ const Pricing = () => {
         {/* Pricing Card */}
         <section className="py-24 bg-white relative border-b-2 border-navy">
           <div className="container mx-auto px-6">
-            <div className="max-w-4xl mx-auto border-4 border-navy bg-white p-8 md:p-16 relative shadow-hard">
+            <div className="border-4 border-navy bg-white p-8 md:p-16 relative shadow-hard">
               {/* Decorator */}
-              <div className="absolute top-0 right-0 p-4 bg-navy text-white font-mono text-xs uppercase tracking-widest">
-                PROFESSIONAL_PACKAGE
+              <div className="w-full md:w-auto md:absolute top-0 right-0 p-4 bg-navy text-white font-mono text-xs uppercase tracking-widest mb-6 md:mb-0 text-center md:text-left">
+                AUTOPILOT_PACKAGE
               </div>
 
               <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12 border-b-4 border-navy/10 pb-12">
                 <div>
-                  <h2 className="text-4xl font-black text-navy uppercase tracking-tighter mb-4">Professional Package</h2>
+                  <h2 className="text-4xl font-black text-navy uppercase tracking-tighter mb-4">Autopilot Package</h2>
                   <p className="font-mono text-ink-light max-w-md">Complete management solution for your investment.</p>
                 </div>
                 <div className="text-right">
@@ -138,9 +138,9 @@ const Pricing = () => {
         {/* COMPARISON TABLE */}
         <section className="py-24 bg-wash border-b-2 border-navy">
           <div className="container mx-auto px-6">
-            <div className="max-w-5xl mx-auto">
+            <div>
               <div className="text-center mb-16">
-                <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-2 block">> MARKET_ANALYSIS_MATRIX</span>
+                <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-2 block">&gt; MARKET_ANALYSIS_MATRIX</span>
                 <h2 className="text-4xl font-black text-navy tracking-tighter">VALUE COMPARISON</h2>
               </div>
 
@@ -202,16 +202,16 @@ const Pricing = () => {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
           <div className="container mx-auto px-6 relative z-10">
-            <div className="max-w-4xl mx-auto">
+            <div>
               <div className="flex flex-col md:flex-row items-start gap-12">
                 <div className="bg-teal p-6 shadow-hard shrink-0 text-navy hidden md:block">
                   <UserCheck className="w-16 h-16" />
                 </div>
                 <div>
-                  <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-4 block">> SYSTEM_INTEGRITY</span>
+                  <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-4 block">&gt; SYSTEM_INTEGRITY</span>
                   <h2 className="text-3xl md:text-5xl font-black mb-6 tracking-tighter">Your Dedicated Property Manager</h2>
 
-                  <div className="prose prose-invert prose-lg text-white/80 font-mono leading-relaxed space-y-4">
+                  <div className="prose prose-invert prose-lg text-white/80 font-mono leading-relaxed space-y-4 md:columns-2 gap-12 [&>p]:break-inside-avoid-column">
                     <p>
                       At Property Partner, we do things differently. You get a dedicated property manager—the <strong>same person</strong> who held the viewings and selected the tenants is the same person doing routine inspections, reporting, and maintenance coordination.
                     </p>
@@ -233,7 +233,7 @@ const Pricing = () => {
                     <p className="text-white/50 text-base border-l-2 border-white/20 pl-4">
                       However, this also means <strong>we are capped at only managing a certain number of properties.</strong> We do this because it's the only way to maintain a standard of service.
                     </p>
-                    <div className="mt-8 p-4 border border-teal/50 bg-teal/10 flex items-start gap-3">
+                    <div className="mt-8 p-4 border border-teal/50 bg-teal/10 flex items-start gap-3 break-inside-avoid-column">
                       <AlertTriangle className="w-5 h-5 text-teal shrink-0 mt-1" />
                       <p className="text-sm">
                         <strong>CAPACITY WARNING:</strong> Unfortunately, this means you may not be able to just "sign up". You may need to go on a waiting list before we have the capacity to manage your properties.
@@ -249,13 +249,13 @@ const Pricing = () => {
         {/* FAQ / TRANSPARENCY SECTION */}
         <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-2 block">> PROTOCOL_CLARIFICATION</span>
+            <div className="text-center mb-16">
+              <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-2 block">&gt; PROTOCOL_CLARIFICATION</span>
               <h2 className="text-3xl font-black text-navy tracking-tighter mb-4">You Asked, We Clarified.</h2>
               <p className="font-mono text-ink-light">Just to keep things simple and completely transparent.</p>
             </div>
 
-            <div className="max-w-4xl mx-auto space-y-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="border-l-4 border-navy bg-wash p-6 shadow-sm">
                 <h3 className="font-black text-lg text-navy uppercase tracking-tight mb-2 flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-teal" /> Is advertising and tenant screening really included?
@@ -329,17 +329,19 @@ const Pricing = () => {
         {/* REAL TALK DISCLAIMER (Moved below FAQ) */}
         <section className="py-24 bg-wash relative border-t-2 border-navy">
           <div className="container mx-auto px-6">
-            <div className="max-w-3xl mx-auto border-l-8 border-navy pl-8 md:pl-12 py-4">
-              <div className="flex items-center gap-4 mb-6">
-                <Fingerprint className="w-10 h-10 text-navy/40" />
-                <span className="font-mono text-xs font-bold text-navy/40 uppercase tracking-widest">> HUMAN_PROTOCOL_OVERRIDE</span>
+            <div className="grid md:grid-cols-12 gap-12 border-l-8 border-navy pl-8 md:pl-12 py-4">
+              <div className="md:col-span-4">
+                <div className="flex items-center gap-4 mb-6">
+                  <Fingerprint className="w-10 h-10 text-navy/40" />
+                  <span className="font-mono text-xs font-bold text-navy/40 uppercase tracking-widest">&gt; HUMAN_PROTOCOL_OVERRIDE</span>
+                </div>
+
+                <h2 className="text-2xl md:text-3xl font-black text-navy tracking-tight mb-6">
+                  A Real & Raw Disclaimer.
+                </h2>
               </div>
 
-              <h2 className="text-2xl md:text-3xl font-black text-navy tracking-tight mb-6">
-                A Real & Raw Disclaimer.
-              </h2>
-
-              <div className="prose prose-navy font-mono text-sm md:text-base leading-relaxed text-ink-light space-y-4">
+              <div className="md:col-span-8 prose prose-navy font-mono text-sm md:text-base leading-relaxed text-ink-light space-y-4">
                 <p>
                   We always endeavour to provide the best property management service possible, but we'll be honest: <strong>we're not perfect.</strong>
                 </p>

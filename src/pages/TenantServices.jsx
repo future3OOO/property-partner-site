@@ -175,6 +175,86 @@ const TenantServices = () => {
           </div>
         </section>
 
+        {/* FEE SCHEDULE */}
+        <section className="py-24 bg-navy text-white relative">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:3rem_3rem]" />
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-16">
+                <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-4 block">&gt; FINANCIAL_TRANSPARENCY</span>
+                <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tighter">MINI FEE SCHEDULE</h2>
+                <p className="text-white/60 font-mono text-sm md:text-base max-w-2xl mx-auto">
+                  We don't believe in nickel-and-diming our tenants. Unlike many other agencies, we don't charge for standard administrative tasks.
+                </p>
+              </div>
+
+              {/* Fee Comparison Grid */}
+              <div className="grid md:grid-cols-2 gap-8 mb-12">
+                {/* Standard Admin */}
+                <div className="bg-white/5 border border-white/10 p-8 backdrop-blur-sm">
+                  <h3 className="font-bold text-teal uppercase tracking-widest text-sm mb-2 border-b border-white/10 pb-4">Tenant Change Fees</h3>
+                  <p className="font-mono text-xs text-white/60 mb-6">When there's a change of tenants living at the property.</p>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center py-2 border-b border-white/5">
+                      <span className="font-mono text-sm text-white/80">Change Tenant/Assignment</span>
+                      <span className="font-bold text-teal">$0.00</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-white/5">
+                      <span className="font-mono text-sm text-white/80">Process Application</span>
+                      <span className="font-bold text-teal">$0.00</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-white/5">
+                      <span className="font-mono text-sm text-white/80">Variation of Tenancy</span>
+                      <span className="font-bold text-teal">$0.00</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-white/5">
+                      <span className="font-mono text-sm text-white/80">Update Bond Record</span>
+                      <span className="font-bold text-teal">$0.00</span>
+                    </div>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-white/10 text-xs font-mono text-white/40 italic">
+                    * Other firms typically charge $20 - $100 for each of these or charge out at an hourly rate.
+                  </div>
+                </div>
+
+                {/* Lease Break */}
+                <div className="bg-white text-navy p-8 border-4 border-teal relative overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-navy text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest">At Cost</div>
+                  <h3 className="font-bold text-navy uppercase tracking-widest text-sm mb-6 border-b border-navy/10 pb-4">Lease Break Fee</h3>
+                  <div className="mb-6">
+                    <div className="flex justify-between items-baseline mb-2">
+                      <span className="font-black text-3xl">1 WEEK RENT</span>
+                      <span className="font-mono text-xs">+ GST</span>
+                    </div>
+                    <p className="font-mono text-xs text-navy/70 leading-relaxed">
+                      Only applicable if you want to break your agreement and move out before the end date.
+                    </p>
+                  </div>
+
+                  <div className="space-y-3 bg-wash p-4 text-xs font-mono text-navy/80 border-l-2 border-teal">
+                    <p><strong>What this covers:</strong></p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li>TradeMe Base Listing</li>
+                      <li>TradeMe Feature Listing</li>
+                      <li>Agent time (viewings/screening)</li>
+                    </ul>
+                  </div>
+                  <p className="mt-4 text-[10px] leading-relaxed opacity-60">
+                    <strong>Reality Check:</strong> The actual advertising cost alone is usually around ~$300. When you add the agent's time to find a replacement, we are often breaking even or losing money on this fee. That is why other firms will often charge out on a per viewing basis or an hourly rate. We charge a simple flat fee strictly to cover costs, not to profit.
+                  </p>
+
+                  <div className="mt-4 pt-4 border-t border-black/10">
+                    <p className="font-mono text-[10px] text-navy/70 leading-relaxed">
+                      <span className="font-bold text-navy">Important:</span> If you are breaking a fixed term, you are legally required to continue paying rent until the date that a new tenant moves in.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
         {/* FAQ MATRIX */}
         <section className="py-24 bg-wash">
           <div className="container mx-auto px-6">
@@ -300,29 +380,7 @@ const TenantServices = () => {
           </div>
         </section>
 
-        {/* SUPPORT PANEL */}
-        <section className="bg-navy text-white py-16">
-          <div className="container mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-3 h-3 bg-teal rounded-full animate-pulse" />
-                  <span className="font-mono text-xs font-bold uppercase tracking-widest text-teal">● LIVE_SUPPORT</span>
-                </div>
-                <h2 className="text-3xl font-black uppercase tracking-tighter mb-2">Need Assistance?</h2>
-                <p className="font-mono text-sm text-white/60">Our team is online. Initiate a support ticket or call directly.</p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                <Button className="h-16 px-8 bg-teal text-navy font-mono text-sm font-bold uppercase tracking-widest rounded-none hover:bg-white hover:text-navy border-2 border-teal transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
-                  <MessageSquare className="w-5 h-5" /> [ 💬 START CHAT ]
-                </Button>
-                <Button className="h-16 px-8 bg-transparent text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none hover:bg-white hover:text-navy border-2 border-white/20 hover:border-white transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
-                  <Phone className="w-5 h-5" /> [ 📞 0800 PROPERTY ]
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+
 
       </main>
 

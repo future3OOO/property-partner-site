@@ -7,6 +7,7 @@ import {
   ArrowLeftRightIcon, CheckIcon, ChevronDownIcon, PhoneIcon, MailIcon, ArrowRightIcon, ClockIcon, DivideIcon, LinkIcon, Calendar
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import ContactDialog from "@/components/ContactDialog";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -603,14 +604,13 @@ const LandlordServices = () => {
       <section className="py-32 bg-wash border-t-2 border-navy">
         <Container className="text-center">
           <Tag>INITIATE_SEQUENCE</Tag>
-          <Heading className="mb-12">Ready to optimise your<br />property performance?</Heading>
+          <Heading className="mb-12">Ready to optimise your<br />property management?</Heading>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <Button className="h-20 px-12 bg-navy text-white font-mono text-sm font-bold uppercase tracking-[0.2em] rounded-none hover:bg-teal hover:text-navy hover:shadow-[4px_4px_0px_#0F172A] transition-all w-full sm:w-auto border-2 border-navy">
-              [ Get Started ]
-            </Button>
-            <Button variant="outline" className="h-20 px-12 border-2 border-navy text-navy bg-transparent font-mono text-sm font-bold uppercase tracking-[0.2em] rounded-none hover:bg-navy hover:text-white transition-all w-full sm:w-auto">
-              [ Contact Us ]
-            </Button>
+            <ContactDialog>
+              <Button className="h-20 px-12 bg-navy text-white font-mono text-sm font-bold uppercase tracking-[0.2em] rounded-none hover:bg-teal hover:text-navy hover:shadow-[4px_4px_0px_#0F172A] transition-all w-full sm:w-auto border-2 border-navy">
+                [ Get Started ]
+              </Button>
+            </ContactDialog>
           </div>
         </Container>
       </section>

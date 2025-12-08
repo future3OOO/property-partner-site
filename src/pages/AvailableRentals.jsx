@@ -75,8 +75,8 @@ const TradeMeListing = ({ listing }) => {
                             key={index}
                             onClick={(e) => selectPhoto(e, index)}
                             className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentPhoto
-                                    ? 'bg-teal w-6'
-                                    : 'bg-white/50 hover:bg-white/80'
+                                ? 'bg-teal w-6'
+                                : 'bg-white/50 hover:bg-white/80'
                                 }`}
                             aria-label={`View photo ${index + 1}`}
                         />
@@ -154,59 +154,82 @@ const AvailableRentals = () => {
 
             <main className="flex-grow pt-24">
                 {/* HERO SECTION */}
-                <section className="bg-navy text-white py-16 md:py-24 border-b-8 border-teal relative overflow-hidden">
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+                <section className="bg-navy text-white py-20 md:py-32 border-b-8 border-teal relative overflow-hidden">
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+                    {/* Subtle spotlight effect instead of heavy gradient */}
+                    <div className="absolute top-0 right-0 w-[50%] h-full bg-teal/5 blur-3xl rounded-full translate-x-1/2" />
+
                     <div className="container mx-auto px-6 relative z-30 pointer-events-auto">
                         <div className="max-w-4xl">
-                            <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-4 block">&gt; TENANT_SERVICES // RENTALS</span>
-                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 md:mb-8 tracking-tighter leading-none">
-                                RENTAL <br /> LISTINGS
+                            <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest mb-6 block border-l-2 border-teal pl-3">
+                                PROPERTY_PARTNER // RENTALS
+                            </span>
+                            <h1 className="text-5xl md:text-7xl lg:text-9xl font-black text-white mb-8 tracking-tighter leading-[0.85]">
+                                RENTAL <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal to-teal/60">LISTINGS</span>
                             </h1>
-                            <p className="text-lg md:text-xl text-white/60 max-w-2xl font-mono border-l-4 border-teal pl-6">
+                            <p className="text-lg md:text-2xl text-white/80 max-w-2xl font-medium leading-relaxed font-mono border-l-4 border-teal pl-6">
                                 See what's available. See what's recently been rented.
                             </p>
                         </div>
                     </div>
                 </section>
 
-                {/* TRADE ME LINK SECTION */}
+                {/* TRADE ME LINK SECTION - INVERTED TO LIGHT MODE */}
                 <section className="py-16 md:py-24 bg-white relative z-20 -mt-12">
                     <div className="container mx-auto px-6">
-                        <div className="bg-navy text-white p-6 md:p-12 border-4 border-teal relative overflow-hidden group hover:shadow-[12px_12px_0_0_rgba(13,148,136,0.2)] transition-shadow duration-300">
+                        <div className="bg-wash text-navy p-6 md:p-12 border-4 border-navy relative overflow-hidden group shadow-hard hover:translate-y-1 hover:shadow-none transition-all duration-300">
                             <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-12">
                                 <div className="flex-1 w-full">
                                     <div className="flex items-center gap-3 mb-6">
                                         <div className="w-3 h-3 bg-teal rounded-full animate-pulse" />
-                                        <span className="font-mono text-xs font-bold text-teal uppercase tracking-widest">Live Feed Integration</span>
+                                        <span className="font-mono text-xs font-bold text-navy/60 uppercase tracking-widest">Live Feed Integration</span>
                                     </div>
-                                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-6 tracking-tighter uppercase leading-none">Browse Current Availability</h2>
-                                    <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-2xl font-light mb-8">
+                                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tighter uppercase leading-[0.9] text-navy">
+                                        Browse Current <br /> Availability
+                                    </h2>
+                                    <p className="text-navy/70 text-base md:text-xl leading-relaxed max-w-2xl font-medium mb-8">
                                         All our active vacancies are listed directly on Trade Me. Visit our agency profile to apply for viewings and submit applications.
                                     </p>
 
-                                    <div className="bg-white/10 border-l-4 border-teal p-6 mb-8 max-w-3xl backdrop-blur-sm">
-                                        <h3 className="font-bold text-teal uppercase tracking-widest text-sm mb-2">Application Process</h3>
-                                        <p className="font-mono text-xs md:text-sm text-white/80 mb-4 leading-relaxed">
-                                            To arrange a viewing, you <strong>must submit an inquiry on the Trade Me listing</strong>.
+                                    <div className="bg-white border-l-4 border-teal p-6 mb-8 max-w-3xl shadow-sm">
+                                        <h3 className="font-bold text-navy uppercase tracking-widest text-xs mb-2">Application Protocol</h3>
+                                        <p className="font-mono text-xs md:text-sm text-navy/80 mb-2 leading-relaxed">
+                                            1. Submit inquiry via Trade Me listing.
                                         </p>
-                                        <p className="font-mono text-xs md:text-sm text-white/80 leading-relaxed">
-                                            Anyone who attends a viewing will be automatically sent an application link. You can also view our <a href="/rental-application" className="text-teal underline decoration-teal underline-offset-4 hover:text-white transition-colors">standard application form here</a>.
+                                        <p className="font-mono text-xs md:text-sm text-navy/80 leading-relaxed">
+                                            2. Attend viewing &rarr; Receive application link.
                                         </p>
                                     </div>
                                 </div>
                                 <div className="shrink-0 w-full lg:w-auto">
                                     <Button
                                         asChild
-                                        className="h-16 md:h-20 px-8 md:px-12 bg-teal text-navy font-mono text-sm font-bold uppercase tracking-widest rounded-none hover:bg-white hover:text-navy border-2 border-teal transition-all w-full lg:w-auto"
+                                        className="h-16 md:h-20 px-8 md:px-12 bg-navy text-white font-mono text-sm font-bold uppercase tracking-widest rounded-none hover:bg-teal hover:text-navy border-2 border-navy transition-all w-full lg:w-auto shadow-hard-sm hover:shadow-none"
                                     >
                                         <a href="https://www.trademe.co.nz/a/property/office/5713372" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-4">
                                             Open Trade Me <ExternalLink className="w-6 h-6" />
                                         </a>
                                     </Button>
+                                    <div className="mt-3 text-center lg:text-right">
+                                        <a href="/rental-application" className="font-mono text-xs font-bold text-navy/40 uppercase tracking-widest hover:text-teal transition-colors border-b border-transparent hover:border-teal">
+                                            View Standard Application form
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
-                                <Grid className="w-48 h-48 md:w-64 md:h-64" />
+                            {/* Innovative 'Digital Blueprint' Graphic behind the button */}
+                            <div className="absolute top-0 right-0 w-[500px] h-[500px] pointer-events-none opacity-[0.07] translate-x-1/3 -translate-y-1/3 rotate-12">
+                                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-navy">
+                                    <path d="M10 10 H190 V190 H10 Z" stroke="currentColor" strokeWidth="2" />
+                                    <path d="M40 10 V190 M80 10 V190 M120 10 V190 M160 10 V190" stroke="currentColor" strokeWidth="0.5" />
+                                    <path d="M10 40 H190 M10 80 H190 M10 120 H190 M10 160 H190" stroke="currentColor" strokeWidth="0.5" />
+                                    <rect x="40" y="40" width="80" height="80" stroke="currentColor" strokeWidth="2" />
+                                    <rect x="120" y="120" width="40" height="40" stroke="currentColor" strokeWidth="2" />
+                                    <path d="M100 80 L140 120" stroke="currentColor" strokeWidth="1" />
+                                    <circle cx="140" cy="140" r="10" stroke="currentColor" strokeWidth="2" />
+                                    <circle cx="80" cy="80" r="20" stroke="currentColor" strokeWidth="1" />
+                                </svg>
                             </div>
                         </div>
                     </div>
