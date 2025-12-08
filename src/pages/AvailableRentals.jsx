@@ -31,15 +31,17 @@ const TradeMeListing = ({ listing }) => {
     return (
         <div className="group relative overflow-hidden bg-navy border-2 border-navy aspect-[3/2]">
             {/* Main Image */}
-            <a 
-                href={listing.trademe_url} 
-                target="_blank" 
+            <a
+                href={listing.trademe_url}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full h-full pointer-events-none"
             >
                 <img
                     src={photos[currentPhoto] || '/placeholder.svg'}
                     alt={`${listing.title} - Photo ${currentPhoto + 1}`}
+                    loading="lazy"
+                    decoding="async"
                     className="object-cover w-full h-full opacity-80 pointer-events-auto cursor-pointer group-hover:opacity-100 transition-all duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent opacity-100 pointer-events-none" />
@@ -72,11 +74,10 @@ const TradeMeListing = ({ listing }) => {
                         <button
                             key={index}
                             onClick={(e) => selectPhoto(e, index)}
-                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                                index === currentPhoto 
-                                    ? 'bg-teal w-6' 
+                            className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentPhoto
+                                    ? 'bg-teal w-6'
                                     : 'bg-white/50 hover:bg-white/80'
-                            }`}
+                                }`}
                             aria-label={`View photo ${index + 1}`}
                         />
                     ))}
@@ -93,9 +94,9 @@ const TradeMeListing = ({ listing }) => {
             )}
 
             {/* Content Overlay */}
-            <a 
-                href={listing.trademe_url} 
-                target="_blank" 
+            <a
+                href={listing.trademe_url}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="absolute bottom-0 left-0 right-0 p-6 z-10 pointer-events-none"
             >

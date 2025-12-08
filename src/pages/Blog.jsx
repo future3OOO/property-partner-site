@@ -157,6 +157,8 @@ const Blog = () => {
                                     <img
                                         src={post.image}
                                         alt={post.title}
+                                        loading="lazy"
+                                        decoding="async"
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                     <div className="absolute top-3 right-3 bg-white/90 backdrop-blur text-navy px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest border border-navy/10 flex items-center gap-1">
